@@ -36,7 +36,7 @@ public class NameActivity extends AppCompatActivity {
                     Toast.makeText(NameActivity.this, "Please enter your name", Toast.LENGTH_LONG).show();
                 else {
                     tinyDB.putBoolean("isNameSelected", true);
-                    AsyncTask.execute(() -> MainApplication.userDao.insertAll(new User()));
+                    AsyncTask.execute(() -> tinyDB.putLong("userId", MainApplication.userDao.insertAll(new User(userName.getText().toString()))[0]));
                     startActivity(new Intent(NameActivity.this, MainActivity.class));
                     finishAffinity();
                 }

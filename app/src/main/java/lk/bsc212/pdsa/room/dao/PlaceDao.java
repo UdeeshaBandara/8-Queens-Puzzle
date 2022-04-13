@@ -2,25 +2,21 @@ package lk.bsc212.pdsa.room.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Transaction;
 
 import java.util.List;
 
 import lk.bsc212.pdsa.model.QueenPlace;
-import lk.bsc212.pdsa.model.QueenPlaceUser;
 
 @Dao
 public interface PlaceDao {
-    @Insert
+
+
+    @Transaction
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(QueenPlace... places);
-
-    @Insert
-    default void inset(QueenPlaceUser... answer){
-
-
-    }
-
 
     @Query("SELECT * FROM QUEENPLACE")
     List<QueenPlace> getQueenPlaces();
@@ -28,8 +24,11 @@ public interface PlaceDao {
     @Query("SELECT COUNT(*) FROM QUEENPLACE")
     int combinationCount();
 
-    @Transaction
-    @Query("SELECT * FROM QUEENPLACE WHERE placeId = :placeId")
-    List<QueenPlaceUser> getAnsweredUser(int placeId);
+
+    @Query("SELECT COUNT(*) FROM QUEENPLACE WHERE answeredUserId = 0")
+    int checkOtherOptionExist();
+
+    @Query("UPDATE QUEENPLACE SET answeredUserId = 0")
+    int resetGame();
 
 }

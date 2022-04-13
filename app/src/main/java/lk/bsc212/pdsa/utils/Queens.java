@@ -1,12 +1,9 @@
 package lk.bsc212.pdsa.utils;
 
-import android.os.AsyncTask;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lk.bsc212.pdsa.MainActivity;
 import lk.bsc212.pdsa.MainApplication;
 import lk.bsc212.pdsa.model.QueenPlace;
 

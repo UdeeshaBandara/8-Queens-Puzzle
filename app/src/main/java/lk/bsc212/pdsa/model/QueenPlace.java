@@ -7,23 +7,26 @@ import androidx.room.PrimaryKey;
 public class QueenPlace {
 
     @PrimaryKey(autoGenerate = true)
-    public int placeId;
+    public long placeId;
 
     public String places;
 
-//    public String placeAnswerUser;
+    public long answeredUserId;
 
 
-    public int getPlaceId() {
-        return placeId;
+
+
+    public QueenPlace() {
     }
 
-    public void setPlaceId(int placeId) {
-        this.placeId = placeId;
-    }
-
-    public QueenPlace(String places) {
+    public QueenPlace(String places ) {
         this.places = places;
+    }
+
+    public QueenPlace(long placeId, String places, long answeredUserId) {
+        this.placeId = placeId;
+        this.places = places;
+        this.answeredUserId = answeredUserId;
     }
 
     public String getPlaces() {

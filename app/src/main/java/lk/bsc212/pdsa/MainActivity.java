@@ -1,8 +1,10 @@
 package lk.bsc212.pdsa;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,8 @@ import java.util.stream.Collectors;
 import lk.bsc212.pdsa.adapter.ChessAdapter;
 import lk.bsc212.pdsa.model.QueenPlace;
 import lk.bsc212.pdsa.model.QueenPlaceUser;
-import lk.bsc212.pdsa.model.User;
 import lk.bsc212.pdsa.utils.Queens;
+import lk.bsc212.pdsa.utils.TinyDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,8 +33,10 @@ public class MainActivity extends AppCompatActivity {
     //UI elements
     RecyclerView recyclerChessBoard;
     private KProgressHUD hud;
+    Button btnFinish;
 
     ChessAdapter chessAdapter;
+    TinyDB tinyDB;
 
 
     @Override
@@ -43,18 +47,12 @@ public class MainActivity extends AppCompatActivity {
         init();
 
 
-        //get the database instance and init Dao
-//        appDatabase = AppDatabase.getDatabase(MainActivity.this);
-//        placeDao = appDatabase.placeDao();
-
         loadData();
 
 
         findViewById(R.id.btn_check).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                Toast.makeText(MainActivity.this, possiblePlaces.get(0).places, Toast.LENGTH_SHORT).show();
 
                 if (Collections.frequency(selectedPlaces, "1") != 8)
 
@@ -63,23 +61,39 @@ public class MainActivity extends AppCompatActivity {
                 else {
                     String selectedPlacesString = selectedPlaces.stream().map(Object::toString)
                             .collect(Collectors.joining(", "));
-                    for (QueenPlace placesArray : possiblePlaces) {
 
-                        if (placesArray.places.equals(selectedPlacesString)) {
+                    AsyncTask.execute(() -> {
+                        boolean isTrueAnswer = false;
+                        for (QueenPlace placesArray : possiblePlaces) {
 
-                            List<QueenPlaceUser> queenPlaceUser = MainApplication.placeDao.getAnsweredUser(placesArray.placeId);
-                            if (queenPlaceUser.size() > 0) {
-                                Toast.makeText(MainActivity.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show();
+                            if (placesArray.places.equals(selectedPlacesString)) {
+                                isTrueAnswer = true;
+                                List<QueenPlaceUser> queenPlaceUser = MainApplication.userDao.getAnsweredUser(placesArray.placeId);
 
-                            } else {
-                                AsyncTask.execute(() -> MainApplication.placeDao.insertAll(new QueenPlaceUser(placesArray, new User("Udeesha"))));
-                                Toast.makeText(MainActivity.this, "Correct answer", Toast.LENGTH_SHORT).show();
+                                if (queenPlaceUser.size() > 0) {
+                                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
+
+                                } else {
+                                    MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
+                                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Correct answer", Toast.LENGTH_SHORT).show());
+
+                                    if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
+                                        runOnUiThread(() -> {
+                                            Toast.makeText(MainActivity.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
+                                            btnFinish.performClick();
+                                        });
+                                    }
+                                }
+                                break;
+
+
                             }
-
                         }
-//                        possiblePlaces.add(new ArrayList<>(Arrays.asList(Arrays.stream(place.places.split(",")).map(Boolean::parseBoolean).toArray(Boolean[]::new))));
+                        if (!isTrueAnswer)
+                            runOnUiThread(() -> Toast.makeText(MainActivity.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
 
-                    }
+
+                    });
 
                 }
 
@@ -92,12 +106,29 @@ public class MainActivity extends AppCompatActivity {
             chessAdapter.updatePlaces(selectedPlaces);
 
         });
+        btnFinish.setOnClickListener(view -> {
+
+            AsyncTask.execute(() -> MainApplication.placeDao.resetGame());
+            selectedPlaces = new ArrayList<>(Collections.nCopies(64, "0"));
+            chessAdapter.updatePlaces(selectedPlaces);
+
+        });
+        findViewById(R.id.btn_switch).setOnClickListener(view -> {
+
+            tinyDB.putBoolean("isNameSelected", false);
+            startActivity(new Intent(MainActivity.this,NameActivity.class));
+            finishAffinity();
+
+        });
 
     }
 
     void init() {
 
+        tinyDB = new TinyDB(MainActivity.this);
+
         recyclerChessBoard = findViewById(R.id.recycler_chess_board);
+        btnFinish = findViewById(R.id.btn_finish);
         hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                 .setCancellable(false)

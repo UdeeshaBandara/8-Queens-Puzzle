@@ -7,12 +7,17 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    public int userId;
+    public long userId;
 
     public String name;
+
+
+    public User() {
+    }
 
     public User(String name) {
 
         this.name = name;
     }
+
 }
