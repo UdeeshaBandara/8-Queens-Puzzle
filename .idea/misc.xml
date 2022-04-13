@@ -4,7 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/background_black.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/button_background.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/edit_text_background.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/splash_layout.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_name.xml" value="0.209375" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_chess_cell.xml" value="0.20615384615384616" />
       </map>
     </option>

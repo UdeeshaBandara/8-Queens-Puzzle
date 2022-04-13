@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lk.bsc212.pdsa.MainActivity;
+import lk.bsc212.pdsa.MainApplication;
 import lk.bsc212.pdsa.model.QueenPlace;
 
 public class Queens {
@@ -55,7 +56,7 @@ public class Queens {
 
 //        AsyncTask.execute(() -> MainActivity.placeDao.insertAll(new QueenPlace(collection.stream().map(Object::toString)
 //                .collect(Collectors.joining(", ")))));
-        MainActivity.placeDao.insertAll(new QueenPlace(collection.stream().map(Object::toString)
+        MainApplication.placeDao.insertAll(new QueenPlace(collection.stream().map(Object::toString)
                 .collect(Collectors.joining(", "))));
 
 

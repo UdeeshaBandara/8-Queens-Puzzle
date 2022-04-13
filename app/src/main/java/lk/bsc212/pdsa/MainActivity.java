@@ -1,5 +1,6 @@
 package lk.bsc212.pdsa;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -17,8 +18,8 @@ import java.util.stream.Collectors;
 
 import lk.bsc212.pdsa.adapter.ChessAdapter;
 import lk.bsc212.pdsa.model.QueenPlace;
-import lk.bsc212.pdsa.room.AppDatabase;
-import lk.bsc212.pdsa.room.dao.PlaceDao;
+import lk.bsc212.pdsa.model.QueenPlaceUser;
+import lk.bsc212.pdsa.model.User;
 import lk.bsc212.pdsa.utils.Queens;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,9 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     ChessAdapter chessAdapter;
 
-    //Database
-    public static AppDatabase appDatabase;
-    public static PlaceDao placeDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //get the database instance and init Dao
-        appDatabase = AppDatabase.getDatabase(MainActivity.this);
-        placeDao = appDatabase.placeDao();
+//        appDatabase = AppDatabase.getDatabase(MainActivity.this);
+//        placeDao = appDatabase.placeDao();
 
         loadData();
 
@@ -68,7 +66,15 @@ public class MainActivity extends AppCompatActivity {
                     for (QueenPlace placesArray : possiblePlaces) {
 
                         if (placesArray.places.equals(selectedPlacesString)) {
-                            Toast.makeText(MainActivity.this, "Correct answer", Toast.LENGTH_SHORT).show();
+
+                            List<QueenPlaceUser> queenPlaceUser = MainApplication.placeDao.getAnsweredUser(placesArray.placeId);
+                            if (queenPlaceUser.size() > 0) {
+                                Toast.makeText(MainActivity.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                AsyncTask.execute(() -> MainApplication.placeDao.insertAll(new QueenPlaceUser(placesArray, new User("Udeesha"))));
+                                Toast.makeText(MainActivity.this, "Correct answer", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
 //                        possiblePlaces.add(new ArrayList<>(Arrays.asList(Arrays.stream(place.places.split(",")).map(Boolean::parseBoolean).toArray(Boolean[]::new))));
@@ -84,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             selectedPlaces = new ArrayList<>(Collections.nCopies(64, "0"));
             chessAdapter.updatePlaces(selectedPlaces);
-           
+
         });
 
     }
@@ -107,16 +113,11 @@ public class MainActivity extends AppCompatActivity {
         showHUD();
 
         new Thread(() -> {
-            if (placeDao.combinationCount() != 92)
+            if (MainApplication.placeDao.combinationCount() != 92)
                 Queens.enumerate(8);
 
-            possiblePlaces = placeDao.getQueenPlaces();
-//
-//            for (QueenPlace place : placeDao.getQueenPlaces()) {
-////                        possiblePlaces.add(new ArrayList<>(Arrays.asList(Arrays.stream(place.places.split(",")).map(Boolean::parseBoolean).toArray(Boolean[]::new))));
-//
-//                possiblePlaces.add(place.places);
-//            }
+            possiblePlaces = MainApplication.placeDao.getQueenPlaces();
+
             runOnUiThread(() -> {
 
                 hideHUD();

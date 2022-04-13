@@ -7,11 +7,14 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import lk.bsc212.pdsa.model.QueenPlace;
+import lk.bsc212.pdsa.model.User;
 import lk.bsc212.pdsa.room.dao.PlaceDao;
+import lk.bsc212.pdsa.room.dao.UserDao;
 
-@Database(entities = {QueenPlace.class}, version = 1)
+@Database(entities = {QueenPlace.class, User.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
+    public abstract UserDao userDao();
 
     private static volatile AppDatabase INSTANCE;
 
