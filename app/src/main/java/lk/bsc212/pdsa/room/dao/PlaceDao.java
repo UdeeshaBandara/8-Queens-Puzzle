@@ -31,4 +31,5 @@ public interface PlaceDao {
     @Query("UPDATE QUEENPLACE SET answeredUserId = 0")
     int resetGame();
 
+
 }

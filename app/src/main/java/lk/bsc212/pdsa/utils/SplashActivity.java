@@ -16,9 +16,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tinyDB =new TinyDB(SplashActivity.this);
+        tinyDB = new TinyDB(SplashActivity.this);
 
-        if(tinyDB.getBoolean("isNameSelected"))
+        if (tinyDB.getBoolean("isNameSelected"))
             startActivity(new Intent(this, MainActivity.class));
         else
             startActivity(new Intent(this, NameActivity.class));

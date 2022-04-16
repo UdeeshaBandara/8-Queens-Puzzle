@@ -24,6 +24,7 @@ import lk.bsc212.pdsa.model.QueenPlaceUser;
 import lk.bsc212.pdsa.utils.Queens;
 import lk.bsc212.pdsa.utils.TinyDB;
 
+
 public class MainActivity extends AppCompatActivity {
 
     //Data structures
@@ -116,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_switch).setOnClickListener(view -> {
 
             tinyDB.putBoolean("isNameSelected", false);
-            startActivity(new Intent(MainActivity.this,NameActivity.class));
+            startActivity(new Intent(MainActivity.this, NameActivity.class));
             finishAffinity();
 
         });
@@ -140,12 +141,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerChessBoard.setLayoutManager(new GridLayoutManager(MainActivity.this, 8, GridLayoutManager.VERTICAL, false));
     }
 
+
     void loadData() {
         showHUD();
 
         new Thread(() -> {
             if (MainApplication.placeDao.combinationCount() != 92)
-                Queens.enumerate(8);
+                Queens.enumerate(8).forEach(place -> MainApplication.placeDao.insertAll(new QueenPlace(place)));
+
 
             possiblePlaces = MainApplication.placeDao.getQueenPlaces();
 
