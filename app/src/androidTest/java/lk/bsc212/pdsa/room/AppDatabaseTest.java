@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
-import lk.bsc212.pdsa.MainApplication;
 import lk.bsc212.pdsa.model.QueenPlace;
 import lk.bsc212.pdsa.room.dao.PlaceDao;
 import lk.bsc212.pdsa.utils.Queens;
