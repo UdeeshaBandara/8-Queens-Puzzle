@@ -13,9 +13,6 @@ public class QueenPlace {
 
     public long answeredUserId;
 
-
-
-
     public QueenPlace() {
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import lk.bsc212.pdsa.room.AppDatabase;
 import lk.bsc212.pdsa.room.dao.PlaceDao;
+import lk.bsc212.pdsa.room.dao.ShortestPathDao;
 import lk.bsc212.pdsa.room.dao.UserDao;
 
 public class MainApplication extends Application {
@@ -20,6 +21,7 @@ public class MainApplication extends Application {
     public static AppDatabase appDatabase;
     public static PlaceDao placeDao;
     public static UserDao userDao;
+    public static ShortestPathDao shortestPathDao;
 
     @Override
     public void onCreate() {
@@ -29,6 +31,7 @@ public class MainApplication extends Application {
         appDatabase = AppDatabase.getDatabase(MainApplication.this);
         placeDao = appDatabase.placeDao();
         userDao = appDatabase.userDao();
+        shortestPathDao = appDatabase.shortestPathDao();
 
 
     }

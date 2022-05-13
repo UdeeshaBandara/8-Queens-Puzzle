@@ -8,24 +8,6 @@ import java.util.List;
 
 public class QueenPlaceUser {
 
-//    @Embedded
-//    public QueenPlace queenPlace ;
-//    @Relation(
-//
-//            parentColumn = "placeId",
-//            entityColumn = "answeredUserId"
-//    )
-//    public User user;
-
-//    @Embedded
-//    public User user;
-//    @Relation(
-//
-//            parentColumn = "userId",
-//            entityColumn = "answeredUserId"
-//    )
-//    public QueenPlace queenPlace;
-
 
     @Embedded
     public User user;
@@ -37,8 +19,4 @@ public class QueenPlaceUser {
     public List<QueenPlace> queenPlace;
 
 
-    //    public QueenPlaceUser(List<QueenPlace> queenPlace, User user) {
-//        this.queenPlace = queenPlace;
-//        this.user = user;
-//    }
 }
