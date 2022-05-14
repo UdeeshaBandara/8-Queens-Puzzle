@@ -1,8 +1,8 @@
 package lk.bsc212.pdsa;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,14 +15,15 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 
 import lk.bsc212.pdsa.adapter.ShortestPathDistanceAdapter;
 import lk.bsc212.pdsa.model.CityDistance;
 import lk.bsc212.pdsa.model.PlacePredict;
 import lk.bsc212.pdsa.model.ShortestDistanceAnswer;
+import lk.bsc212.pdsa.model.ShortestDistanceAnswerCity;
 import lk.bsc212.pdsa.model.WeightedGraph;
 import lk.bsc212.pdsa.utils.DijkstraAlgorithm;
 import lk.bsc212.pdsa.utils.TinyDB;
@@ -87,7 +88,6 @@ public class ShortestPath extends AppCompatActivity {
                 .setDimAmount(0.5f);
 
 
-
         recyclerDistance.setLayoutManager(new LinearLayoutManager(ShortestPath.this, LinearLayoutManager.VERTICAL, false));
 
         refresh.setOnClickListener(view -> {
@@ -102,41 +102,42 @@ public class ShortestPath extends AppCompatActivity {
 
         btnCheck.setOnClickListener(view -> {
 
-            CityDistance[] showingEdges = new CityDistance[weightedGraph.size()];
+            CityDistance[] showingEdges = new CityDistance[18];
             ShortestDistanceAnswer[] predictedDis = new ShortestDistanceAnswer[9];
 
             if (predictedDistance.stream().anyMatch(o -> o.getPredictedDistance() == 0.0))
                 Toast.makeText(ShortestPath.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
 
             else if (isCorrectAnswer()) {
-
                 Toast.makeText(ShortestPath.this, "Correct answer", Toast.LENGTH_SHORT).show();
 //
-//                AsyncTask.execute(() -> {
-//                    long answerId = MainApplication.shortestPathDao.insertAll(new ShortestDistanceAnswerCity(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
-//                    int outerIndex = 0;
-//                    for (int row = 0; 0 < weightedGraph.getEdges().length; row++)
-//                        for (int col = 0; 0 < weightedGraph.getEdges().length; col++)
-//                            if (weightedGraph.getEdges()[row][col] != 0)
-//                                showingEdges[outerIndex++] = new CityDistance(row, col, weightedGraph.getEdges()[row][col], answerId);
-//
-//                    MainApplication.shortestPathDao.insertDistanceBetweenCities(showingEdges);
-//
-//                    for (int in = 0; 0 < predictedDistance.size(); in++)
-//                        predictedDis[in] = new ShortestDistanceAnswer(predictedDistance.get(in).getCityName(), predictedDistance.get(in).getPredictedDistance(), answerId);
-//
-//
-//                    MainApplication.shortestPathDao.insertShortestPaths(predictedDis);
-//
-//                });
+                AsyncTask.execute(() -> {
+                    long answerId = MainApplication.shortestPathDao.insertAll(new ShortestDistanceAnswerCity(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
+                    int outerIndex = 0;
+                    for (int row = 0; row < (weightedGraph.getEdges().length); row++)
+                        for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++)
+                            if (weightedGraph.getEdges()[row][col] != 0 && weightedGraph.getEdges()[col][row] != 0) {
+                                showingEdges[outerIndex++] = new CityDistance(row, col, weightedGraph.getEdges()[row][col], answerId);
+                                weightedGraph.getEdges()[col][row] = 0;
+                            }
 
+                    MainApplication.shortestPathDao.insertDistanceBetweenCities(showingEdges);
+
+                    for (int in = 0; in < predictedDistance.size(); in++)
+                        predictedDis[in] = new ShortestDistanceAnswer(predictedDistance.get(in).getCityName(), predictedDistance.get(in).getPredictedDistance(), answerId);
+
+
+                    MainApplication.shortestPathDao.insertShortestPaths(predictedDis);
+
+
+                });
+                initGraph();
 
             } else
                 Toast.makeText(ShortestPath.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
         });
 
     }
-
 
 
     void initGraph() {
@@ -148,7 +149,7 @@ public class ShortestPath extends AppCompatActivity {
         weightedGraph = new WeightedGraph(10);
         predictedDistance = new ArrayList<>();
 
-        weightedGraphVisualizer.setData(weightedGraph);
+        weightedGraphVisualizer.setData(weightedGraph,systemSelectedCity);
 
         description.setText("Predict shortest distance from city " + systemSelectedCity + " to following cities");
         for (int index = 0; index < 10; index++)
@@ -160,6 +161,7 @@ public class ShortestPath extends AppCompatActivity {
 
 
     }
+
     boolean isCorrectAnswer() {
 
         predictedDistance.add(systemSelectedCity, new PlacePredict(systemSelectedCity, 0));

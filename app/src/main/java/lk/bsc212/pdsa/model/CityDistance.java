@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class CityDistance {
 
     @PrimaryKey(autoGenerate = true)
-    public long id;
+    public int id;
 
     public int fromCityName;
 

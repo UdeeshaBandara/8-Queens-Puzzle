@@ -93,7 +93,8 @@ public class ShortestPathDistanceAdapter extends RecyclerView.Adapter<ShortestPa
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-            predictedDistance.get(position).setPredictedDistance(Integer.parseInt(charSequence.toString()));
+            if (charSequence.length() > 0)
+                predictedDistance.get(position).setPredictedDistance(Integer.parseInt(charSequence.toString()));
 
         }
 

@@ -32,6 +32,7 @@ public class WeightedGraphVisualizer extends View {
     private Map<Integer, Point> pointMap = new HashMap<>();
 
     private WeightedGraph graph;
+    int systemSelectedCity;
 
     public WeightedGraphVisualizer(Context context) {
         super(context);
@@ -89,8 +90,9 @@ public class WeightedGraphVisualizer extends View {
         setMeasuredDimension(getMeasuredWidth(), getDimensionInPixel(400));
     }
 
-    public void setData(WeightedGraph graph) {
+    public void setData(WeightedGraph graph, int systemSelectedCity) {
         this.graph = graph;
+        this.systemSelectedCity = systemSelectedCity;
         invalidate();
     }
 
@@ -166,6 +168,11 @@ public class WeightedGraphVisualizer extends View {
     private void drawCircleTextNode(Canvas canvas, Point p, int number) {
         String text = String.valueOf(number);
 
+        if (systemSelectedCity == number)
+            circlePaint.setColor(Color.RED);
+
+        else
+            circlePaint.setColor(getResources().getColor(R.color.primary));
 
         canvas.drawCircle(p.x, p.y, getDimensionInPixel(15), circlePaint);
 

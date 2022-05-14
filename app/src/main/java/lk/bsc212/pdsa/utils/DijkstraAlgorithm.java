@@ -1,5 +1,7 @@
 package lk.bsc212.pdsa.utils;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class DijkstraAlgorithm  {
                 System.out.println("There is no path between source " + s + " and vertex " + i);
             } else {
                 shortestPathAnswers.add(dist[i]);
-                System.out.println("Shortest path from source:" + s + " to vertex " + i + " is " + dist[i]);
+                Log.e("TAG","Shortest path from source:" + s + " to vertex " + i + " is " + dist[i]);
             }
         }
 

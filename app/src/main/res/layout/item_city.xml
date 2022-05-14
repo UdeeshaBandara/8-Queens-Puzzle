@@ -25,6 +25,7 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:maxLength="3"
         android:layout_weight="7"
         android:background="@drawable/edit_text_background"
         android:gravity="center"
