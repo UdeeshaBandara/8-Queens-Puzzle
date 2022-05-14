@@ -18,23 +18,28 @@ public class WeightedGraph {
 
 
         addEdge(0, 1, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(0, 6, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(0, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(1, 2, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(1, 8, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(2, 3, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(2, 8, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(3, 4, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(3, 5, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(3, 8, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(4, 7, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(4, 8, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(4, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(5, 4, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(6, 0, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(4, 5, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(6, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(7, 6, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(8, 1, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(8, 2, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(6, 7, (int) (Math.random() * (50 - 5 + 1) + 5));
+        addEdge(7, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(8, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(9, 0, (int) (Math.random() * (50 - 5 + 1) + 5));
-        addEdge(9, 7, (int) (Math.random() * (50 - 5 + 1) + 5));
+
+        //Backtracking the edge values to make it a bi-directional graph
+        for (int row = 0; row < edges.length; row++)
+            for (int column = 0; column < edges[0].length; column++)
+                edges[column][row] = edges[row][column];
 
 
     }

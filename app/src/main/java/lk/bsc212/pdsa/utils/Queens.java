@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 public class Queens {
 
     static String[][] possiblePlaces = new String[8][8];
-    //    static List<String> possiblePs = Arrays.asList(new String[4]);
     static List<String> possiblePs = new ArrayList<>();
 
 

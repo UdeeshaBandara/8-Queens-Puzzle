@@ -29,8 +29,6 @@ public class WeightedGraphVisualizer extends View {
     private Paint lineHighlightPaint;
     private Rect bounds;
 
-    private int highlightNode = -1;
-    private int highlightLineStart = -1, highlightLineEnd = -1;
     private Map<Integer, Point> pointMap = new HashMap<>();
 
     private WeightedGraph graph;
@@ -77,6 +75,7 @@ public class WeightedGraphVisualizer extends View {
         lineHighlightPaint.setColor(Color.BLUE);
         lineHighlightPaint.setStrokeWidth(10);
     }
+
     private @NonNull
     Rect getTextBackgroundSize(float x, float y, @NonNull String text, @NonNull Paint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
@@ -130,7 +129,7 @@ public class WeightedGraphVisualizer extends View {
                         getHeight() - getDimensionInPixel(30),
                         getHeight() - getDimensionInPixel(30),
                         getHeight() / 2 - getDimensionInPixel(55),
-                        getHeight() / 2+ getDimensionInPixel(80)
+                        getHeight() / 2 + getDimensionInPixel(80)
 
                 }
         };
@@ -167,11 +166,9 @@ public class WeightedGraphVisualizer extends View {
     private void drawCircleTextNode(Canvas canvas, Point p, int number) {
         String text = String.valueOf(number);
 
-        if (highlightNode == number) {
-            canvas.drawCircle(p.x, p.y, getDimensionInPixel(15), circleHighlightPaint);
-        } else {
-            canvas.drawCircle(p.x, p.y, getDimensionInPixel(15), circlePaint);
-        }
+
+        canvas.drawCircle(p.x, p.y, getDimensionInPixel(15), circlePaint);
+
         int yOffset = bounds.height() / 2;
 
         canvas.drawText(text, p.x, p.y + yOffset, textPaint);
@@ -187,41 +184,15 @@ public class WeightedGraphVisualizer extends View {
         int midx = (start.x + end.x) / 2;
         int midy = (start.y + end.y) / 2;
 
-        boolean highlight = (highlightLineStart == s && highlightLineEnd == e);
-        if (highlight) {
-            canvas.drawLine(start.x, start.y, end.x, end.y, lineHighlightPaint);
-        } else {
-            canvas.drawLine(start.x, start.y, end.x, end.y, linePaint);
-        }
+
+        canvas.drawLine(start.x, start.y, end.x, end.y, linePaint);
+
         Rect background = getTextBackgroundSize(midx, midy, String.valueOf(weight), weightPaint);
         canvas.drawRect(background, textPaint);
         canvas.drawText(String.valueOf(weight), midx, midy, weightPaint);
 
     }
 
-    public void highlightNode(int node) {
-        this.highlightNode = node;
-        invalidate();
-    }
-
-    public void highlightLine(int start, int end) {
-        this.highlightLineStart = start;
-        this.highlightLineEnd = end;
-        invalidate();
-    }
-
-
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-//        setMeasuredDimension(getMeasuredWidth(), getDimensionInPixel(330));
-//    }
-    public void onCompleted() {
-        this.highlightLineStart = -1;
-        this.highlightLineEnd = -1;
-        this.highlightNode = -1;
-        invalidate();
-    }
     public int getDimensionInPixel(int dp) {
         int density = getResources().getDisplayMetrics().densityDpi;
 

@@ -2,13 +2,13 @@ package lk.bsc212.pdsa.model;
 
 public class PlacePredict {
     int cityName;
-    double predictedDistance = 0.0;
+    int predictedDistance = 0;
 
     public PlacePredict(int cityName) {
         this.cityName = cityName;
     }
 
-    public PlacePredict(int cityName, double predictedDistance) {
+    public PlacePredict(int cityName, int predictedDistance) {
         this.cityName = cityName;
         this.predictedDistance = predictedDistance;
     }
@@ -21,11 +21,11 @@ public class PlacePredict {
         this.cityName = cityName;
     }
 
-    public double getPredictedDistance() {
+    public int getPredictedDistance() {
         return predictedDistance;
     }
 
-    public void setPredictedDistance(double predictedDistance) {
+    public void setPredictedDistance(int predictedDistance) {
         this.predictedDistance = predictedDistance;
     }
 }
