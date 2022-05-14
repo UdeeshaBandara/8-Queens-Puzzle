@@ -38,7 +38,7 @@ public class ShortestPathDistanceAdapter extends RecyclerView.Adapter<ShortestPa
     @Override
     public DistanceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_city, parent, false);
+                .inflate(R.layout.item_shortest_path_city, parent, false);
         return new DistanceHolder(view, new AnswerEditTextListener());
 
     }

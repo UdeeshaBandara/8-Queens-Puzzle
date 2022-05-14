@@ -1,4 +1,4 @@
-package lk.bsc212.pdsa.model;
+package lk.bsc212.pdsa.model.room;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

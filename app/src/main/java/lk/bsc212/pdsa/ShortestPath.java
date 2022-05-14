@@ -15,15 +15,14 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import lk.bsc212.pdsa.adapter.ShortestPathDistanceAdapter;
-import lk.bsc212.pdsa.model.CityDistance;
+import lk.bsc212.pdsa.model.room.CityDistance;
 import lk.bsc212.pdsa.model.PlacePredict;
-import lk.bsc212.pdsa.model.ShortestDistanceAnswer;
-import lk.bsc212.pdsa.model.ShortestDistanceAnswerCity;
+import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
+import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
 import lk.bsc212.pdsa.model.WeightedGraph;
 import lk.bsc212.pdsa.utils.DijkstraAlgorithm;
 import lk.bsc212.pdsa.utils.TinyDB;
@@ -90,14 +89,7 @@ public class ShortestPath extends AppCompatActivity {
 
         recyclerDistance.setLayoutManager(new LinearLayoutManager(ShortestPath.this, LinearLayoutManager.VERTICAL, false));
 
-        refresh.setOnClickListener(view -> {
-//            for (int i = 0; i < predictedDistance.size(); i++) {
-//                ((EditText) Objects.requireNonNull(
-//                        Objects.requireNonNull(recyclerDistance.getLayoutManager()).findViewByPosition(i))
-//                        .findViewById(R.id.distance)).setText("");
-//            }
-            initGraph();
-        });
+        refresh.setOnClickListener(view -> initGraph());
 
 
         btnCheck.setOnClickListener(view -> {

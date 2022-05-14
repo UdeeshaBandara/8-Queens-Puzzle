@@ -1,7 +1,6 @@
-package lk.bsc212.pdsa.model;
+package lk.bsc212.pdsa.model.room;
 
 import androidx.room.Embedded;
-import androidx.room.Entity;
 import androidx.room.Relation;
 
 import java.util.List;

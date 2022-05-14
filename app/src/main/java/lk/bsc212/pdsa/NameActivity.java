@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import lk.bsc212.pdsa.model.User;
+import lk.bsc212.pdsa.model.room.User;
 import lk.bsc212.pdsa.utils.TinyDB;
 
 public class NameActivity extends AppCompatActivity {

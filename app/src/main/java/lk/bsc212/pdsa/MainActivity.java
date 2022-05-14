@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import lk.bsc212.pdsa.adapter.ChessAdapter;
-import lk.bsc212.pdsa.model.QueenPlace;
-import lk.bsc212.pdsa.model.QueenPlaceUser;
+import lk.bsc212.pdsa.model.room.QueenPlace;
+import lk.bsc212.pdsa.model.room.QueenPlaceUser;
 import lk.bsc212.pdsa.utils.Queens;
 import lk.bsc212.pdsa.utils.TinyDB;
 

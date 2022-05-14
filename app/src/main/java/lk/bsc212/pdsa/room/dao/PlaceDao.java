@@ -8,7 +8,7 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
-import lk.bsc212.pdsa.model.QueenPlace;
+import lk.bsc212.pdsa.model.room.QueenPlace;
 
 @Dao
 public interface PlaceDao {

@@ -5,11 +5,9 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Transaction;
 
-import java.util.List;
-
-import lk.bsc212.pdsa.model.CityDistance;
-import lk.bsc212.pdsa.model.ShortestDistanceAnswer;
-import lk.bsc212.pdsa.model.ShortestDistanceAnswerCity;
+import lk.bsc212.pdsa.model.room.CityDistance;
+import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
+import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
 
 @Dao
 public interface ShortestPathDao {

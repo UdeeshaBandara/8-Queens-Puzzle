@@ -7,8 +7,8 @@ import androidx.room.Transaction;
 
 import java.util.List;
 
-import lk.bsc212.pdsa.model.QueenPlaceUser;
-import lk.bsc212.pdsa.model.User;
+import lk.bsc212.pdsa.model.room.QueenPlaceUser;
+import lk.bsc212.pdsa.model.room.User;
 
 @Dao
 public interface UserDao {

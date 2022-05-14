@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="5dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_margin="3dp"
+        android:background="@drawable/white_background">
+
+        <Spinner
+            android:id="@+id/from"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:src="@drawable/right_arrow" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:layout_margin="3dp"
+        android:background="@drawable/white_background">
+
+        <Spinner
+            android:id="@+id/to"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/distance"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_weight="5"
+        android:background="@drawable/edit_text_background"
+        android:gravity="center"
+        android:inputType="number"
+        android:maxLength="3"
+        android:paddingVertical="5dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
