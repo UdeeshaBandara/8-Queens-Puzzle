@@ -74,11 +74,11 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
         holder.from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // On selecting a spinner item
+
                 if (!isSpinnerTouched || position == 0) return;
                 int selectedFromCity = Integer.parseInt(parent.getItemAtPosition(position).toString());
-                // Showing selected spinner item
-//                    Toast.makeText(parent.getContext(), "from: " + item, Toast.LENGTH_LONG).show();
+
+
                 if (selectedToCities[recyclerPosition] == selectedFromCity) {
                     parent.setSelection(0);
                     selectedFromCities[recyclerPosition] = -1;
@@ -97,10 +97,9 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
         holder.to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // On selecting a spinner item
+
                 if (!isSpinnerTouched || position == 0) return;
 
-                // Showing selected spinner item
                 int selectedCity = Integer.parseInt(parent.getItemAtPosition(position).toString());
                 if (systemSelectedCity == selectedCity) {
                     parent.setSelection(0);
@@ -162,7 +161,6 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
                 isSpinnerTouched = true;
                 return false;
             });
-
 
         }
     }

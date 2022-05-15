@@ -36,7 +36,6 @@ public class ShortestPath extends AppCompatActivity {
     DijkstraAlgorithm dijkstraAlgorithm;
 
     RecyclerView recyclerDistance;
-    KProgressHUD hud;
     ImageView refresh;
     TextView description;
     Button btnCheck;
@@ -81,11 +80,6 @@ public class ShortestPath extends AppCompatActivity {
 
 
         description.setText("Predict shortest distance from city " + systemSelectedCity + " to following cities");
-        hud = KProgressHUD.create(this)
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f);
 
 
         recyclerDistance.setLayoutManager(new LinearLayoutManager(ShortestPath.this, LinearLayoutManager.VERTICAL, false));

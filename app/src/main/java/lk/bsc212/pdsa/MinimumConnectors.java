@@ -36,6 +36,7 @@ public class MinimumConnectors extends AppCompatActivity {
     TinyDB tinyDB;
     int systemSelectedCity;
 
+    //Data structures
     int[] selectedFromCities = new int[9];
     int[] selectedToCities = new int[9];
     int[] selectedDistance = new int[9];
@@ -49,15 +50,15 @@ public class MinimumConnectors extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minimum_connectors);
 
-        Arrays.fill(selectedFromCities, -1);
-        Arrays.fill(selectedToCities, -1);
-        Arrays.fill(selectedDistance, -1);
+
         primsGraphDrawer = new PrimsGraphDrawer(this);
         appBarLayout = findViewById(R.id.app_bar);
         description = findViewById(R.id.description);
         btnCheck = findViewById(R.id.btn_check);
         appBarLayout.addView(primsGraphDrawer);
         tinyDB = new TinyDB(MinimumConnectors.this);
+
+
         initGraph();
 
         new PrimsAlgorithm().primMST(weightedGraph.getEdges(), systemSelectedCity, answerFromCities, answerToCities, answerDistance);
@@ -77,8 +78,6 @@ public class MinimumConnectors extends AppCompatActivity {
                 Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
 
                 new PerformDatabaseOperations().execute();
-
-
 
             } else
                 Toast.makeText(MinimumConnectors.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
@@ -124,20 +123,19 @@ public class MinimumConnectors extends AppCompatActivity {
         @Override
         protected synchronized void onPostExecute(long[] result) {
             super.onPostExecute(result);
-            if (result.length > 0) {
+            if (result.length > 0)
 
                 initGraph();
-                Arrays.fill(selectedFromCities, -1);
-                Arrays.fill(selectedToCities, -1);
-                Arrays.fill(selectedDistance, -1);
-            }
+
 
         }
     }
 
 
     void initGraph() {
-
+        Arrays.fill(selectedFromCities, -1);
+        Arrays.fill(selectedToCities, -1);
+        Arrays.fill(selectedDistance, -1);
         systemSelectedCity = (int) (Math.random() * (9 + 1) + 0);
         recyclerMinimumConnector = findViewById(R.id.recycler_minimum_connector);
         recyclerMinimumConnector.setLayoutManager(new LinearLayoutManager(MinimumConnectors.this, LinearLayoutManager.VERTICAL, false));
