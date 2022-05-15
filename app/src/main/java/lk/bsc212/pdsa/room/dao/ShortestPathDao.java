@@ -5,7 +5,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Transaction;
 
-import lk.bsc212.pdsa.model.room.CityDistance;
+import lk.bsc212.pdsa.model.room.CityDistanceShortestPath;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
 
@@ -14,14 +14,14 @@ public interface ShortestPathDao {
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long[] insertAll(ShortestDistanceAnswerCity... shortestDistanceAnswer);
+    long[] insertAll(ShortestDistanceAnswer... shortestDistanceAnswer);
 
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertDistanceBetweenCities(CityDistance... cityDistance);
+    void insertDistanceBetweenCities(CityDistanceShortestPath... cityDistanceShortestPath);
 
     @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertShortestPaths(ShortestDistanceAnswer... CityDistanceAnswer);
+    void insertShortestPaths(ShortestDistanceAnswerCity... CityDistanceAnswer);
 }

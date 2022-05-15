@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class ShortestDistanceAnswer {
+public class MinimumConnectorAnswer {
     @PrimaryKey(autoGenerate = true)
     public long answerId;
 
@@ -12,7 +12,7 @@ public class ShortestDistanceAnswer {
 
     public int systemSelectedCityName;
 
-    public ShortestDistanceAnswer(long userId, int systemSelectedCityName) {
+    public MinimumConnectorAnswer(long userId, int systemSelectedCityName) {
         this.userId = userId;
         this.systemSelectedCityName = systemSelectedCityName;
     }

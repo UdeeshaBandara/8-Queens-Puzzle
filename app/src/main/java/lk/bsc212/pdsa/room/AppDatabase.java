@@ -6,22 +6,31 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import lk.bsc212.pdsa.model.room.CityDistance;
+import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
+import lk.bsc212.pdsa.model.room.CityDistanceShortestPath;
+import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
+import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
 import lk.bsc212.pdsa.model.room.QueenPlace;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
 import lk.bsc212.pdsa.model.room.User;
+import lk.bsc212.pdsa.room.dao.MinimumConnectorDao;
 import lk.bsc212.pdsa.room.dao.PlaceDao;
 import lk.bsc212.pdsa.room.dao.ShortestPathDao;
 import lk.bsc212.pdsa.room.dao.UserDao;
 
-@Database(entities = {QueenPlace.class, User.class, ShortestDistanceAnswer.class, ShortestDistanceAnswerCity.class, CityDistance.class}, version = 2)
+@Database(entities = {QueenPlace.class, User.class,
+        ShortestDistanceAnswerCity.class, ShortestDistanceAnswer.class,
+        CityDistanceShortestPath.class, MinimumConnectorAnswer.class,
+        MinimumConnectorAnswerCity.class, CityDistanceMinimumConnector.class}, version = 3)
+
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
 
     public abstract UserDao userDao();
 
     public abstract ShortestPathDao shortestPathDao();
+    public abstract MinimumConnectorDao minimumConnectorDao();
 
     private static volatile AppDatabase INSTANCE;
 

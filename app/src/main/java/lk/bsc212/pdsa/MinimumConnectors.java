@@ -1,7 +1,8 @@
 package lk.bsc212.pdsa;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,12 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 
+import java.net.URL;
 import java.util.Arrays;
 
 import lk.bsc212.pdsa.adapter.MinimumConnectorAdapter;
 import lk.bsc212.pdsa.model.WeightedGraph;
+import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
+import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
+import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
 import lk.bsc212.pdsa.utils.PrimsAlgorithm;
 import lk.bsc212.pdsa.utils.PrimsGraphDrawer;
+import lk.bsc212.pdsa.utils.TinyDB;
 
 public class MinimumConnectors extends AppCompatActivity {
 
@@ -29,6 +35,7 @@ public class MinimumConnectors extends AppCompatActivity {
     MinimumConnectorAdapter minimumConnectorAdapter;
     PrimsGraphDrawer primsGraphDrawer;
     WeightedGraph weightedGraph;
+    TinyDB tinyDB;
     int systemSelectedCity;
 
     int[] selectedFromCities = new int[9];
@@ -52,26 +59,112 @@ public class MinimumConnectors extends AppCompatActivity {
         description = findViewById(R.id.description);
         btnCheck = findViewById(R.id.btn_check);
         appBarLayout.addView(primsGraphDrawer);
-        init();
+        tinyDB = new TinyDB(MinimumConnectors.this);
+        initGraph();
 
         new PrimsAlgorithm().primMST(weightedGraph.getEdges(), systemSelectedCity, answerFromCities, answerToCities, answerDistance);
 
-        btnCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isCorrectAnswer())
-                    Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
-            }
+        btnCheck.setOnClickListener(view -> {
+            CityDistanceMinimumConnector[] showingEdges = new CityDistanceMinimumConnector[18];
+            MinimumConnectorAnswerCity[] predictedDis = new MinimumConnectorAnswerCity[9];
+            Log.e("on click", systemSelectedCity + " exe");
+            if (Arrays.toString(selectedFromCities).contains("-1")) {
+                Toast.makeText(MinimumConnectors.this, "Please select all from cities", Toast.LENGTH_SHORT).show();
+
+            } else if (Arrays.toString(selectedToCities).contains("-1")) {
+                Toast.makeText(MinimumConnectors.this, "Please select all destination cities", Toast.LENGTH_SHORT).show();
+
+            } else if (Arrays.toString(selectedDistance).contains("-1")) {
+                Toast.makeText(MinimumConnectors.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
+
+            } else if (isCorrectAnswer()) {
+                Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
+                Log.e("Correct ans", systemSelectedCity + " exe");
+                new PerformDatabaseOperations().execute();
+//                AsyncTask.execute(() -> {
+//                    long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
+//                    int outerIndex = 0;
+//                    for (int row = 0; row < (weightedGraph.getEdges().length); row++)
+//                        for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++)
+//                            if (weightedGraph.getEdges()[row][col] != 0 && weightedGraph.getEdges()[col][row] != 0) {
+//                                showingEdges[outerIndex++] = new CityDistanceMinimumConnector(row, col, weightedGraph.getEdges()[row][col], answerId);
+//                                weightedGraph.getEdges()[col][row] = 0;
+//                            }
+//
+//                    MainApplication.minimumConnectorDao.insertDistanceBetweenCities(showingEdges);
+//
+//                    for (int in = 0; in < selectedDistance.length; in++)
+//                        predictedDis[in] = new MinimumConnectorAnswerCity(selectedFromCities[in],selectedToCities[in], selectedDistance[in], answerId);
+//
+//
+//                    MainApplication.minimumConnectorDao.insertShortestPaths(predictedDis);
+//
+//
+//                });
+                initGraph();
+
+
+            } else
+                Toast.makeText(MinimumConnectors.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
         });
 
     }
 
-    void init() {
+    class PerformDatabaseOperations extends AsyncTask<URL, Integer, Long> {
+
+        @Override
+        protected Long doInBackground(URL... urls) {
+            Log.e("doInBackground", systemSelectedCity + " exe");
+            CityDistanceMinimumConnector[] showingEdges = new CityDistanceMinimumConnector[18];
+            MinimumConnectorAnswerCity[] predictedDis = new MinimumConnectorAnswerCity[9];
+            Log.e("doInBackground 1", systemSelectedCity + " exe");
+            long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
+            Log.e("doInBackground 2", systemSelectedCity + " exe");
+            int outerIndex = 0;
+            for (int row = 0; row < (weightedGraph.getEdges().length); row++)
+                for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++)
+                    if (weightedGraph.getEdges()[row][col] != 0 && weightedGraph.getEdges()[col][row] != 0) {
+                        showingEdges[outerIndex++] = new CityDistanceMinimumConnector(row, col, weightedGraph.getEdges()[row][col], answerId);
+                        weightedGraph.getEdges()[col][row] = 0;
+                    }
+            Log.e("doInBackground 3", systemSelectedCity + " exe");
+            MainApplication.minimumConnectorDao.insertDistanceBetweenCities(showingEdges);
+
+            for (int in = 0; in < selectedDistance.length; in++)
+                predictedDis[in] = new MinimumConnectorAnswerCity(selectedFromCities[in], selectedToCities[in], selectedDistance[in], answerId);
+
+            Log.e("doInBackground 4", systemSelectedCity + " exe");
+            MainApplication.minimumConnectorDao.insertShortestPaths(predictedDis);
+
+            Log.e("doInBackground 5", systemSelectedCity + " exe");
+            return null;
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... progress) {
+
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            Log.e("onPostExecute", systemSelectedCity + " exe");
+            initGraph();
+            Arrays.fill(selectedFromCities, -1);
+            Arrays.fill(selectedToCities, -1);
+            Arrays.fill(selectedDistance, -1);
+
+        }
+    }
+
+
+    void initGraph() {
+        Log.e("initGraph ", systemSelectedCity + " exe");
         systemSelectedCity = (int) (Math.random() * (9 + 1) + 0);
         recyclerMinimumConnector = findViewById(R.id.recycler_minimum_connector);
         recyclerMinimumConnector.setLayoutManager(new LinearLayoutManager(MinimumConnectors.this, LinearLayoutManager.VERTICAL, false));
 
-
+        Log.e("initGraph 1", systemSelectedCity + " exe");
         weightedGraph = new WeightedGraph(10);
 
         primsGraphDrawer.setData(weightedGraph, systemSelectedCity);

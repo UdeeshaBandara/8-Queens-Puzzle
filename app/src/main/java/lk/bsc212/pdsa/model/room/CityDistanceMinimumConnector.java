@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class CityDistance {
+public class CityDistanceMinimumConnector {
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -18,7 +18,7 @@ public class CityDistance {
     public long answerId;
 
 
-    public CityDistance(int fromCityName, int toCityName, double distance, long answerId) {
+    public CityDistanceMinimumConnector(int fromCityName, int toCityName, double distance, long answerId) {
         this.fromCityName = fromCityName;
         this.toCityName = toCityName;
         this.distance = distance;

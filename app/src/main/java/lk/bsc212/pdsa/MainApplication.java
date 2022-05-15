@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import lk.bsc212.pdsa.room.AppDatabase;
+import lk.bsc212.pdsa.room.dao.MinimumConnectorDao;
 import lk.bsc212.pdsa.room.dao.PlaceDao;
 import lk.bsc212.pdsa.room.dao.ShortestPathDao;
 import lk.bsc212.pdsa.room.dao.UserDao;
@@ -22,6 +23,7 @@ public class MainApplication extends Application {
     public static PlaceDao placeDao;
     public static UserDao userDao;
     public static ShortestPathDao shortestPathDao;
+    public static MinimumConnectorDao minimumConnectorDao;
 
     @Override
     public void onCreate() {
@@ -32,6 +34,7 @@ public class MainApplication extends Application {
         placeDao = appDatabase.placeDao();
         userDao = appDatabase.userDao();
         shortestPathDao = appDatabase.shortestPathDao();
+        minimumConnectorDao = appDatabase.minimumConnectorDao();
 
 
     }
