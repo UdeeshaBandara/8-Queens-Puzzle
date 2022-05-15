@@ -17,6 +17,7 @@
 
 
     <TextView
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -50,10 +51,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="10dp"
-            android:layout_marginStart="15dp"
+
             android:layout_weight="5"
             android:gravity="center"
             android:text="To"
+
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -63,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginVertical="10dp"
-            android:layout_marginStart="15dp"
+
             android:layout_weight="5"
             android:gravity="center"
             android:text="Distance"
@@ -102,6 +104,9 @@
                 android:text="Check answer"
                 android:textAllCaps="false"
                 android:textColor="@color/black" />
+
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>
