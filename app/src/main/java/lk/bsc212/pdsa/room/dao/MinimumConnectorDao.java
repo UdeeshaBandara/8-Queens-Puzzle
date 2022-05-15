@@ -12,16 +12,16 @@ import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
 public interface MinimumConnectorDao {
 
 
-    @Transaction
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long[] insertAll(MinimumConnectorAnswer... minimumConnectorAnswer);
 
 
-    @Transaction
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertDistanceBetweenCities(CityDistanceMinimumConnector... cityDistanceMinimumConnector);
 
-    @Transaction
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertShortestPaths(MinimumConnectorAnswerCity... minimumConnectorAnswerCity);
+    long[] insertShortestPaths(MinimumConnectorAnswerCity... minimumConnectorAnswerCity);
 }
