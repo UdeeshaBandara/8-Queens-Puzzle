@@ -25,7 +25,7 @@ import lk.bsc212.pdsa.utils.Queens;
 import lk.bsc212.pdsa.utils.TinyDB;
 
 
-public class MainActivity extends AppCompatActivity {
+public class QueenPuzzle extends AppCompatActivity {
 
     //Data structures
     List<QueenPlace> possiblePlaces = new ArrayList<>();
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_queen);
 
         init();
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (Collections.frequency(selectedPlaces, "1") != 8)
 
-                    Toast.makeText(MainActivity.this, "Please select 8 places", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QueenPuzzle.this, "Please select 8 places", Toast.LENGTH_SHORT).show();
 
                 else {
                     String selectedPlacesString = selectedPlaces.stream().map(Object::toString)
@@ -72,15 +72,15 @@ public class MainActivity extends AppCompatActivity {
                                 List<QueenPlaceUser> queenPlaceUser = MainApplication.userDao.getAnsweredUser(placesArray.placeId);
 
                                 if (queenPlaceUser.size() > 0) {
-                                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
 
                                 } else {
                                     MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
-                                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Correct answer", Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Correct answer", Toast.LENGTH_SHORT).show());
 
                                     if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
                                         runOnUiThread(() -> {
-                                            Toast.makeText(MainActivity.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(QueenPuzzle.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
                                             btnFinish.performClick();
                                         });
                                     }
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         if (!isTrueAnswer)
-                            runOnUiThread(() -> Toast.makeText(MainActivity.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
 
 
                     });
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_switch).setOnClickListener(view -> {
 
             tinyDB.putBoolean("isNameSelected", false);
-            startActivity(new Intent(MainActivity.this, NameActivity.class));
+            startActivity(new Intent(QueenPuzzle.this, NameActivity.class));
             finishAffinity();
 
         });
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     void init() {
 
-        tinyDB = new TinyDB(MainActivity.this);
+        tinyDB = new TinyDB(QueenPuzzle.this);
 
         recyclerChessBoard = findViewById(R.id.recycler_chess_board);
         btnFinish = findViewById(R.id.btn_finish);
@@ -136,9 +136,9 @@ public class MainActivity extends AppCompatActivity {
                 .setAnimationSpeed(2)
                 .setDimAmount(0.5f);
 
-        chessAdapter = new ChessAdapter(MainActivity.this, selectedPlaces);
+        chessAdapter = new ChessAdapter(QueenPuzzle.this, selectedPlaces);
         recyclerChessBoard.setAdapter(chessAdapter);
-        recyclerChessBoard.setLayoutManager(new GridLayoutManager(MainActivity.this, 8, GridLayoutManager.VERTICAL, false));
+        recyclerChessBoard.setLayoutManager(new GridLayoutManager(QueenPuzzle.this, 8, GridLayoutManager.VERTICAL, false));
     }
 
 

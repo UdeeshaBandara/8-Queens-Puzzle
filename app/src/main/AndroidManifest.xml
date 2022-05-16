@@ -24,7 +24,7 @@
             android:name=".NameActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".QueenPuzzle"
             android:exported="true" />
         <activity
             android:name=".utils.SplashActivity"
@@ -37,7 +37,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

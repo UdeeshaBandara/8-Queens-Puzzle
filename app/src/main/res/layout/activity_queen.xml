@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:overScrollMode="never"
     android:scrollbars="none"
-    tools:context=".MainActivity">
+    tools:context=".QueenPuzzle">
 
     <RelativeLayout
         android:layout_width="match_parent"

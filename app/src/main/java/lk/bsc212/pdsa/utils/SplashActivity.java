@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import lk.bsc212.pdsa.MainActivity;
+import lk.bsc212.pdsa.QueenPuzzle;
 import lk.bsc212.pdsa.NameActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         tinyDB = new TinyDB(SplashActivity.this);
 
         if (tinyDB.getBoolean("isNameSelected"))
-            startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, QueenPuzzle.class));
         else
             startActivity(new Intent(this, NameActivity.class));
 

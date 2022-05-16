@@ -37,7 +37,7 @@ public class NameActivity extends AppCompatActivity {
                 else {
                     tinyDB.putBoolean("isNameSelected", true);
                     AsyncTask.execute(() -> tinyDB.putLong("userId", MainApplication.userDao.insertAll(new User(userName.getText().toString()))[0]));
-                    startActivity(new Intent(NameActivity.this, MainActivity.class));
+                    startActivity(new Intent(NameActivity.this, QueenPuzzle.class));
                     finishAffinity();
                 }
 
