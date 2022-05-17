@@ -3,11 +3,11 @@
     <style name="Theme.PDSACW" parent="Theme.AppCompat.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#A788D3</item>
-        <item name="colorPrimaryVariant">#A788D3</item>
+        <item name="colorPrimaryVariant">#11273B</item>
         <item name="colorOnPrimary">#A788D3</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#A788D3</item>
-        <item name="colorSecondaryVariant">#A788D3</item>
+        <item name="colorSecondaryVariant">#11273B</item>
         <item name="colorOnSecondary">#A788D3</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

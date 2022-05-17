@@ -19,6 +19,7 @@ import lk.bsc212.pdsa.model.WeightedGraph;
 import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
 import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
 import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
+import lk.bsc212.pdsa.utils.AlertDialog;
 import lk.bsc212.pdsa.utils.PrimsAlgorithm;
 import lk.bsc212.pdsa.utils.PrimsGraphDrawer;
 import lk.bsc212.pdsa.utils.TinyDB;
@@ -66,21 +67,26 @@ public class MinimumConnectors extends AppCompatActivity {
         btnCheck.setOnClickListener(view -> {
 
             if (Arrays.toString(selectedFromCities).contains("-1")) {
-                Toast.makeText(MinimumConnectors.this, "Please select all from cities", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MinimumConnectors.this, "Please select all from cities", Toast.LENGTH_SHORT).show();
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please select all from cities", "OK");
 
             } else if (Arrays.toString(selectedToCities).contains("-1")) {
-                Toast.makeText(MinimumConnectors.this, "Please select all destination cities", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MinimumConnectors.this, "Please select all destination cities", Toast.LENGTH_SHORT).show();
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please select all destination cities", "OK");
 
             } else if (Arrays.toString(selectedDistance).contains("-1")) {
-                Toast.makeText(MinimumConnectors.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MinimumConnectors.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please enter distance for all cities", "OK");
 
             } else if (isCorrectAnswer()) {
-                Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
+                new AlertDialog().positiveAlert(MinimumConnectors.this, "Congratulations", "Game completed!!", "OK");
 
                 new PerformDatabaseOperations().execute();
 
             } else
-                Toast.makeText(MinimumConnectors.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MinimumConnectors.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK");
         });
 
     }

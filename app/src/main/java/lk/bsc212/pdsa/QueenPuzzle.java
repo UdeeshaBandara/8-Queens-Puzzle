@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 import lk.bsc212.pdsa.adapter.ChessAdapter;
 import lk.bsc212.pdsa.model.room.QueenPlace;
 import lk.bsc212.pdsa.model.room.QueenPlaceUser;
+import lk.bsc212.pdsa.utils.AlertDialog;
 import lk.bsc212.pdsa.utils.Queens;
 import lk.bsc212.pdsa.utils.TinyDB;
 
@@ -39,7 +40,6 @@ public class QueenPuzzle extends AppCompatActivity {
     ChessAdapter chessAdapter;
     TinyDB tinyDB;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +56,8 @@ public class QueenPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (Collections.frequency(selectedPlaces, "1") != 8)
-
-                    Toast.makeText(QueenPuzzle.this, "Please select 8 places", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(QueenPuzzle.this, "Please select 8 places", Toast.LENGTH_SHORT).show();
+                    new AlertDialog().negativeAlert(QueenPuzzle.this, "Invalid Input", "Please select 8 places", "OK");
 
                 else {
                     String selectedPlacesString = selectedPlaces.stream().map(Object::toString)
@@ -72,33 +72,31 @@ public class QueenPuzzle extends AppCompatActivity {
                                 List<QueenPlaceUser> queenPlaceUser = MainApplication.userDao.getAnsweredUser(placesArray.placeId);
 
                                 if (queenPlaceUser.size() > 0) {
-                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
+//                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, "Invalid Input", "Answer already provided by " + queenPlaceUser.get(0).user.name, "OK"));
 
                                 } else {
                                     MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
-                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Correct answer", Toast.LENGTH_SHORT).show());
+//                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Correct answer", Toast.LENGTH_SHORT).show());
+                                    runOnUiThread(() -> new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "Correct Answer", "OK"));
+
 
                                     if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
                                         runOnUiThread(() -> {
-                                            Toast.makeText(QueenPuzzle.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(QueenPuzzle.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
+                                            new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "Game completed!!", "OK");
                                             btnFinish.performClick();
                                         });
                                     }
                                 }
                                 break;
-
-
                             }
                         }
                         if (!isTrueAnswer)
-                            runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
-
-
+//                            runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
+                            runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK"));
                     });
-
                 }
-
-
             }
         });
         findViewById(R.id.btn_clear).setOnClickListener(view -> {

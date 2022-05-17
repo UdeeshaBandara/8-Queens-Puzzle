@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import lk.bsc212.pdsa.model.room.User;
+import lk.bsc212.pdsa.utils.AlertDialog;
 import lk.bsc212.pdsa.utils.TinyDB;
 
 public class NameActivity extends AppCompatActivity {
@@ -33,11 +34,12 @@ public class NameActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (TextUtils.isEmpty(userName.getText().toString()))
-                    Toast.makeText(NameActivity.this, "Please enter your name", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(NameActivity.this, "Please enter your name", Toast.LENGTH_LONG).show();
+                    new AlertDialog().negativeAlert(NameActivity.this, "Invalid Input", "Please enter your name", "OK");
                 else {
                     tinyDB.putBoolean("isNameSelected", true);
                     AsyncTask.execute(() -> tinyDB.putLong("userId", MainApplication.userDao.insertAll(new User(userName.getText().toString()))[0]));
-                    startActivity(new Intent(NameActivity.this, QueenPuzzle.class));
+                    startActivity(new Intent(NameActivity.this, MenuActivity.class));
                     finishAffinity();
                 }
 

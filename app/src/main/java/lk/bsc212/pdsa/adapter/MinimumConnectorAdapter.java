@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import lk.bsc212.pdsa.R;
+import lk.bsc212.pdsa.utils.AlertDialog;
 
 public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnectorAdapter.MinimumHolder> {
 
@@ -82,7 +83,8 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
                 if (selectedToCities[recyclerPosition] == selectedFromCity) {
                     parent.setSelection(0);
                     selectedFromCities[recyclerPosition] = -1;
-                    Toast.makeText(parent.getContext(), "This city selected as destination", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(parent.getContext(), "This city selected as destination", Toast.LENGTH_LONG).show();
+                    new AlertDialog().negativeAlert(parent.getContext(), "Invalid Input", "This city selected as destination", "OK");
                 } else
                     selectedFromCities[recyclerPosition] = selectedFromCity;
             }
@@ -104,20 +106,20 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
                 if (systemSelectedCity == selectedCity) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    Toast.makeText(parent.getContext(), "Cannot select start city as destination", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(parent.getContext(), "Cannot select start city as destination", Toast.LENGTH_LONG).show();
+                    new AlertDialog().negativeAlert(parent.getContext(), "Invalid Input", "Cannot select start city as destination", "OK");
                 } else if (Arrays.stream(selectedToCities).anyMatch(i -> i == selectedCity)) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    Toast.makeText(parent.getContext(), "This city already selected!!!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(parent.getContext(), "This city already selected!!!", Toast.LENGTH_LONG).show();
+                    new AlertDialog().negativeAlert(parent.getContext(), "Invalid Input", "This city already selected!!!", "OK");
                 } else if (selectedFromCities[recyclerPosition] == selectedCity) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    Toast.makeText(parent.getContext(), "Cannot select start city as destination", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(parent.getContext(), "Cannot select start city as destination", Toast.LENGTH_LONG).show();
+                    new AlertDialog().negativeAlert(parent.getContext(), "Invalid Input", "Cannot select start city as destination", "OK");
                 } else
                     selectedToCities[recyclerPosition] = selectedCity;
-
-
-
             }
 
             @Override
