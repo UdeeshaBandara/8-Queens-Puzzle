@@ -21,7 +21,7 @@ import lk.bsc212.pdsa.room.dao.UserDao;
 @Database(entities = {QueenPlace.class, User.class,
         ShortestDistanceAnswerCity.class, ShortestDistanceAnswer.class,
         CityDistanceShortestPath.class, MinimumConnectorAnswer.class,
-        MinimumConnectorAnswerCity.class, CityDistanceMinimumConnector.class}, version = 5)
+        CityDistanceMinimumConnector.class}, version = 6)
 
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();
@@ -29,6 +29,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
 
     public abstract ShortestPathDao shortestPathDao();
+
     public abstract MinimumConnectorDao minimumConnectorDao();
 
     private static volatile AppDatabase INSTANCE;

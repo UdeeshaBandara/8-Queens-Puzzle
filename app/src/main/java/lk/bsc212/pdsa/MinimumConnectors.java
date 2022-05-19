@@ -89,14 +89,14 @@ public class MinimumConnectors extends AppCompatActivity {
 
     }
 
-    class PerformDatabaseOperations extends AsyncTask<Void, Integer, long[]> {
+    class PerformDatabaseOperations extends AsyncTask<Void, Integer, Void> {
 
         @Override
-        protected synchronized long[] doInBackground(Void... params) {
+        protected synchronized Void doInBackground(Void... params) {
 
 
             CityDistanceMinimumConnector[] showingEdges = new CityDistanceMinimumConnector[18];
-            MinimumConnectorAnswerCity[] predictedDis = new MinimumConnectorAnswerCity[9];
+//            MinimumConnectorAnswerCity[] predictedDis = new MinimumConnectorAnswerCity[9];
 
             long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
 
@@ -115,12 +115,8 @@ public class MinimumConnectors extends AppCompatActivity {
                 MainApplication.minimumConnectorDao.updateVisitedFlag(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]), String.valueOf(answerId));
 
 
-//                predictedDis[in] = new MinimumConnectorAnswerCity(MainApplication.minimumConnectorDao.getCityIdByFromAndToCity(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]),String.valueOf(selectedDistance[in])), answerId);
 
-
-            return MainApplication.minimumConnectorDao.insertShortestPaths(predictedDis);
-
-
+            return null;
         }
 
         @Override
@@ -130,13 +126,9 @@ public class MinimumConnectors extends AppCompatActivity {
 
 
         @Override
-        protected synchronized void onPostExecute(long[] result) {
-            super.onPostExecute(result);
-            if (result.length > 0)
-
-                initGraph();
-
-
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            initGraph();
         }
     }
 
