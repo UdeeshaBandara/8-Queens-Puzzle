@@ -34,7 +34,6 @@ public class NameActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (TextUtils.isEmpty(userName.getText().toString()))
-//                    Toast.makeText(NameActivity.this, "Please enter your name", Toast.LENGTH_LONG).show();
                     new AlertDialog().negativeAlert(NameActivity.this, "Invalid Input", "Please enter your name", "OK");
                 else {
                     tinyDB.putBoolean("isNameSelected", true);

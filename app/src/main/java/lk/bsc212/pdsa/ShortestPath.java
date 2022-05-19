@@ -89,16 +89,13 @@ public class ShortestPath extends AppCompatActivity {
 
 
             if (predictedDistance.stream().anyMatch(o -> o.getPredictedDistance() == 0.0))
-//                Toast.makeText(ShortestPath.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
             new AlertDialog().negativeAlert(ShortestPath.this, "Invalid Input", "Please enter distance for all cities", "OK");
 
             else if (isCorrectAnswer()) {
-//                Toast.makeText(ShortestPath.this, "Correct answer", Toast.LENGTH_SHORT).show();
                 new AlertDialog().positiveAlert(ShortestPath.this, "Hurray and Congratulations!!!", "You have Successfully completed the Game", "Great");
 
                 new PerformDatabaseOperations().execute();
             } else
-//                Toast.makeText(ShortestPath.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
                 new AlertDialog().negativeAlert(ShortestPath.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK");
         });
 

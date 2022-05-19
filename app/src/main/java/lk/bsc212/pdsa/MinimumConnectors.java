@@ -65,26 +65,21 @@ public class MinimumConnectors extends AppCompatActivity {
         btnCheck.setOnClickListener(view -> {
 
             if (Arrays.toString(selectedFromCities).contains("-1")) {
-//                Toast.makeText(MinimumConnectors.this, "Please select all from cities", Toast.LENGTH_SHORT).show();
-                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please select all from cities", "OK");
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Move!!!", " Please complete all cities as for starting cities of pairs", "OK");
 
             } else if (Arrays.toString(selectedToCities).contains("-1")) {
-//                Toast.makeText(MinimumConnectors.this, "Please select all destination cities", Toast.LENGTH_SHORT).show();
-                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please select all destination cities", "OK");
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Move!!!", "Please complete all cities as for destinations as of pairs", "OK");
 
             } else if (Arrays.toString(selectedDistance).contains("-1")) {
-//                Toast.makeText(MinimumConnectors.this, "Please enter distance for all cities", Toast.LENGTH_SHORT).show();
-                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Input", "Please enter distance for all cities", "OK");
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Invalid Move!!!", "Please fill out  distances for each pairs paired as choice", "OK");
 
             } else if (isCorrectAnswer()) {
-//                Toast.makeText(MinimumConnectors.this, "Correct answer", Toast.LENGTH_SHORT).show();
-                new AlertDialog().positiveAlert(MinimumConnectors.this, "Congratulations", "Game completed!!", "OK");
+                new AlertDialog().positiveAlert(MinimumConnectors.this, "Hurray and Congratulations!!!", "You have Successfully completed the Game", "OK");
 
                 new PerformDatabaseOperations().execute();
 
             } else
-//                Toast.makeText(MinimumConnectors.this, "Wrong answer! Try again!!!", Toast.LENGTH_SHORT).show();
-                new AlertDialog().negativeAlert(MinimumConnectors.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK");
+                new AlertDialog().negativeAlert(MinimumConnectors.this, "Oops !!!", "Wrong answer, Better try again for your winning choices", "OK");
         });
 
     }
@@ -96,7 +91,6 @@ public class MinimumConnectors extends AppCompatActivity {
 
 
             CityDistanceMinimumConnector[] showingEdges = new CityDistanceMinimumConnector[18];
-//            MinimumConnectorAnswerCity[] predictedDis = new MinimumConnectorAnswerCity[9];
 
             long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
 
@@ -145,7 +139,7 @@ public class MinimumConnectors extends AppCompatActivity {
         weightedGraph = new WeightedGraph(10);
 
         primsGraphDrawer.setData(weightedGraph, systemSelectedCity);
-        description.setText("Find minimum connectors from city " + systemSelectedCity);
+        description.setText("Lets Find the Minimum connectors starting from city " + systemSelectedCity);
 
         minimumConnectorAdapter = new MinimumConnectorAdapter(MinimumConnectors.this, systemSelectedCity, selectedFromCities, selectedToCities, selectedDistance);
         recyclerMinimumConnector.setAdapter(minimumConnectorAdapter);

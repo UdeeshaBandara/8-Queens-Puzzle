@@ -76,7 +76,6 @@ public class ChessAdapter extends RecyclerView.Adapter<ChessAdapter.ChessCellHol
 
             if (Collections.frequency(selectedPlaces, "1") == 8 && selectedPlaces.get(position).equals("0")) {
 
-//                Toast.makeText(context, "Cannot select more than 8 places", Toast.LENGTH_SHORT).show();
                 new AlertDialog().negativeAlert(context, "Invalid Input", "Cannot select more than 8 places", "OK");
                 return;
 

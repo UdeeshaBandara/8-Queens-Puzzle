@@ -13,7 +13,6 @@ public class ShortestDistanceAnswerCity {
 
     public int shortestDistance;
 
-
     public long answerId;
 
     public ShortestDistanceAnswerCity(long cityName, int shortestDistance, long answerId) {
