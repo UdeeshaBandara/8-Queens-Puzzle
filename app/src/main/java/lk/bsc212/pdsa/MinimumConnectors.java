@@ -17,7 +17,6 @@ import lk.bsc212.pdsa.adapter.MinimumConnectorAdapter;
 import lk.bsc212.pdsa.model.WeightedGraph;
 import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
 import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
-import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
 import lk.bsc212.pdsa.utils.AlertDialog;
 import lk.bsc212.pdsa.utils.PrimsAlgorithm;
 import lk.bsc212.pdsa.utils.PrimsGraphDrawer;
@@ -105,7 +104,7 @@ public class MinimumConnectors extends AppCompatActivity {
             for (int row = 0; row < (weightedGraph.getEdges().length); row++)
                 for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++)
                     if (weightedGraph.getEdges()[row][col] != 0 && weightedGraph.getEdges()[col][row] != 0) {
-                        showingEdges[outerIndex++] = new CityDistanceMinimumConnector(row, col, weightedGraph.getEdges()[row][col]);
+                        showingEdges[outerIndex++] = new CityDistanceMinimumConnector(row, col, weightedGraph.getEdges()[row][col], answerId);
                         //assign 0 to transposed location
                         weightedGraph.getEdges()[col][row] = 0;
                     }
@@ -113,7 +112,10 @@ public class MinimumConnectors extends AppCompatActivity {
             MainApplication.minimumConnectorDao.insertDistanceBetweenCities(showingEdges);
 
             for (int in = 0; in < selectedDistance.length; in++)
-                predictedDis[in] = new MinimumConnectorAnswerCity(MainApplication.minimumConnectorDao.getCityIdByFromAndToCity(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]),String.valueOf(selectedDistance[in])), answerId);
+                MainApplication.minimumConnectorDao.updateVisitedFlag(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]), String.valueOf(answerId));
+
+
+//                predictedDis[in] = new MinimumConnectorAnswerCity(MainApplication.minimumConnectorDao.getCityIdByFromAndToCity(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]),String.valueOf(selectedDistance[in])), answerId);
 
 
             return MainApplication.minimumConnectorDao.insertShortestPaths(predictedDis);

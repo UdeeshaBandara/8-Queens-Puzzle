@@ -9,7 +9,6 @@ import androidx.room.RoomDatabase;
 import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
 import lk.bsc212.pdsa.model.room.CityDistanceShortestPath;
 import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
-import lk.bsc212.pdsa.model.room.MinimumConnectorAnswerCity;
 import lk.bsc212.pdsa.model.room.QueenPlace;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;

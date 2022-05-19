@@ -15,10 +15,15 @@ public class CityDistanceMinimumConnector {
 
     public double distance;
 
+    public long answerId;
 
-    public CityDistanceMinimumConnector(int fromCityName, int toCityName, double distance) {
+    public int isVisited;
+
+
+    public CityDistanceMinimumConnector(int fromCityName, int toCityName, double distance, long answerId) {
         this.fromCityName = fromCityName;
         this.toCityName = toCityName;
         this.distance = distance;
+        this.answerId = answerId;
     }
 }
