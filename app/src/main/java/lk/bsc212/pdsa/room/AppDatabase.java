@@ -22,7 +22,7 @@ import lk.bsc212.pdsa.room.dao.UserDao;
 @Database(entities = {QueenPlace.class, User.class,
         ShortestDistanceAnswerCity.class, ShortestDistanceAnswer.class,
         CityDistanceShortestPath.class, MinimumConnectorAnswer.class,
-        MinimumConnectorAnswerCity.class, CityDistanceMinimumConnector.class}, version = 3)
+        MinimumConnectorAnswerCity.class, CityDistanceMinimumConnector.class}, version = 5)
 
 public abstract class AppDatabase extends RoomDatabase {
     public abstract PlaceDao placeDao();

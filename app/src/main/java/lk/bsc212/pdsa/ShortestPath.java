@@ -80,9 +80,6 @@ public class ShortestPath extends AppCompatActivity {
         dijkstraAlgorithm = new DijkstraAlgorithm();
 
 
-        description.setText("Predict shortest distance from city " + systemSelectedCity + " to following cities");
-
-
         recyclerDistance.setLayoutManager(new LinearLayoutManager(ShortestPath.this, LinearLayoutManager.VERTICAL, false));
 
         refresh.setOnClickListener(view -> initGraph());
@@ -97,7 +94,7 @@ public class ShortestPath extends AppCompatActivity {
 
             else if (isCorrectAnswer()) {
 //                Toast.makeText(ShortestPath.this, "Correct answer", Toast.LENGTH_SHORT).show();
-                new AlertDialog().positiveAlert(ShortestPath.this, "Congratulations", "Correct answer!!", "OK");
+                new AlertDialog().positiveAlert(ShortestPath.this, "Hurray and Congratulations!!!", "You have Successfully completed the Game", "Great");
 
                 new PerformDatabaseOperations().execute();
             } else

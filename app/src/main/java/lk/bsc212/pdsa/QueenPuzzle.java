@@ -57,7 +57,7 @@ public class QueenPuzzle extends AppCompatActivity {
 
                 if (Collections.frequency(selectedPlaces, "1") != 8)
 //                    Toast.makeText(QueenPuzzle.this, "Please select 8 places", Toast.LENGTH_SHORT).show();
-                    new AlertDialog().negativeAlert(QueenPuzzle.this, "Invalid Input", "Please select 8 places", "OK");
+                    new AlertDialog().negativeAlert(QueenPuzzle.this, "Sorry!!!", " Cannot select more than 8 places", "Got it");
 
                 else {
                     String selectedPlacesString = selectedPlaces.stream().map(Object::toString)
@@ -73,18 +73,18 @@ public class QueenPuzzle extends AppCompatActivity {
 
                                 if (queenPlaceUser.size() > 0) {
 //                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Answer already provided by " + queenPlaceUser.get(0).user.name, Toast.LENGTH_SHORT).show());
-                                    runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, "Invalid Input", "Answer already provided by " + queenPlaceUser.get(0).user.name, "OK"));
+                                    runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, " Sorry!!!", "Your choice have already submitted by " + queenPlaceUser.get(0).user.name, "OK"));
 
                                 } else {
                                     MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
 //                                    runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Correct answer", Toast.LENGTH_SHORT).show());
-                                    runOnUiThread(() -> new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "Correct Answer", "OK"));
+                                    runOnUiThread(() -> new AlertDialog().positiveAlert(QueenPuzzle.this, "Hurray!!!", "Your choice is a Correct answer….", "OK"));
 
 
                                     if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
                                         runOnUiThread(() -> {
 //                                            Toast.makeText(QueenPuzzle.this, "Congratulations! Game completed!!", Toast.LENGTH_SHORT).show();
-                                            new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "Game completed!!", "OK");
+                                            new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "You have Successfully completed the Game", "Great");
                                             btnFinish.performClick();
                                         });
                                     }
@@ -94,7 +94,7 @@ public class QueenPuzzle extends AppCompatActivity {
                         }
                         if (!isTrueAnswer)
 //                            runOnUiThread(() -> Toast.makeText(QueenPuzzle.this, "Wrong answer. Try again", Toast.LENGTH_SHORT).show());
-                            runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK"));
+                            runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, "Oops!!!", "Wrong answer, Better try again for your winning choice", "OK"));
                     });
                 }
             }

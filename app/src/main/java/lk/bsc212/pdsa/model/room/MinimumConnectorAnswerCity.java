@@ -9,18 +9,12 @@ public class MinimumConnectorAnswerCity {
     @PrimaryKey(autoGenerate = true)
     public long id;
 
-    public long fromCityName;
-    public long toCityName;
-
-    public int shortestDistance;
-
+    public long cityId;
 
     public long answerId;
 
-    public MinimumConnectorAnswerCity(long fromCityName, long toCityName, int shortestDistance, long answerId) {
-        this.fromCityName = fromCityName;
-        this.toCityName = toCityName;
-        this.shortestDistance = shortestDistance;
+    public MinimumConnectorAnswerCity(long cityId, long answerId) {
+        this.cityId = cityId;
         this.answerId = answerId;
     }
 }
