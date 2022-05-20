@@ -14,7 +14,7 @@ import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
 import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
 import lk.bsc212.pdsa.model.room.User;
 import lk.bsc212.pdsa.room.dao.MinimumConnectorDao;
-import lk.bsc212.pdsa.room.dao.PlaceDao;
+import lk.bsc212.pdsa.room.dao.QueenPlaceDao;
 import lk.bsc212.pdsa.room.dao.ShortestPathDao;
 import lk.bsc212.pdsa.room.dao.UserDao;
 
@@ -24,7 +24,7 @@ import lk.bsc212.pdsa.room.dao.UserDao;
         CityDistanceMinimumConnector.class}, version = 6)
 
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract PlaceDao placeDao();
+    public abstract QueenPlaceDao placeDao();
 
     public abstract UserDao userDao();
 

@@ -16,14 +16,14 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import lk.bsc212.pdsa.model.room.QueenPlace;
-import lk.bsc212.pdsa.room.dao.PlaceDao;
+import lk.bsc212.pdsa.room.dao.QueenPlaceDao;
 import lk.bsc212.pdsa.utils.Queens;
 
 @RunWith(AndroidJUnit4.class)
 public class AppDatabaseTest extends TestCase {
 
     public AppDatabase appDatabase;
-    public PlaceDao placeDao;
+    public QueenPlaceDao queenPlaceDao;
 
     @Before
     @Override
@@ -31,7 +31,7 @@ public class AppDatabaseTest extends TestCase {
         super.setUp();
         appDatabase = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).allowMainThreadQueries().build();
 
-        placeDao = appDatabase.placeDao();
+        queenPlaceDao = appDatabase.placeDao();
     }
 
     @After
@@ -44,8 +44,8 @@ public class AppDatabaseTest extends TestCase {
 
 
         QueenPlace queenPlace = new QueenPlace(1, "1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0", 12);
-        placeDao.insertAll(queenPlace);
-        List<QueenPlace> queenPlaces = placeDao.getQueenPlaces();
+        queenPlaceDao.insertAll(queenPlace);
+        List<QueenPlace> queenPlaces = queenPlaceDao.getQueenPlaces();
         assertThat(queenPlaces.stream().anyMatch(o -> o.places.equals(queenPlace.places) && o.placeId == queenPlace.placeId && o.answeredUserId == queenPlace.answeredUserId)).isTrue();
 
     }
@@ -54,9 +54,9 @@ public class AppDatabaseTest extends TestCase {
     @Test
     public void checkAllPossibleSolutionsAreGenerated() {
 
-        Queens.enumerate(8).forEach(place -> placeDao.insertAll(new QueenPlace(place)));
+        Queens.enumerate(8).forEach(place -> queenPlaceDao.insertAll(new QueenPlace(place)));
 
-        assertThat(placeDao.combinationCount()).isEqualTo(92);
+        assertThat(queenPlaceDao.combinationCount()).isEqualTo(92);
 
 
     }

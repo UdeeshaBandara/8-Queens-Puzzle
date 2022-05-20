@@ -1,6 +1,5 @@
 package lk.bsc212.pdsa;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -76,14 +75,14 @@ public class QueenPuzzle extends AppCompatActivity {
                                     });
 
                                 } else {
-                                    MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
+                                    MainApplication.queenPlaceDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
                                     runOnUiThread(() -> {
                                         new AlertDialog().positiveAlert(QueenPuzzle.this, "Hurray!!!", "Your choice is a Correct answer….", "OK");
                                         btnClear.performClick();
                                     });
 
 
-                                    if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
+                                    if (MainApplication.queenPlaceDao.checkOtherOptionExist() == 0) {
                                         runOnUiThread(() -> {
                                             new AlertDialog().positiveAlert(QueenPuzzle.this, "Congratulations", "You have Successfully completed the Game", "Great");
                                             btnFinish.performClick();
@@ -107,7 +106,7 @@ public class QueenPuzzle extends AppCompatActivity {
         });
         btnFinish.setOnClickListener(view -> {
 
-            AsyncTask.execute(() -> MainApplication.placeDao.resetGame());
+            AsyncTask.execute(() -> MainApplication.queenPlaceDao.resetGame());
             selectedPlaces = new ArrayList<>(Collections.nCopies(64, "0"));
             chessAdapter.updatePlaces(selectedPlaces);
             new AlertDialog().positiveAlert(QueenPuzzle.this, "Information!!!", "All game records have been reset", "OK");
@@ -140,11 +139,11 @@ public class QueenPuzzle extends AppCompatActivity {
         showHUD();
 
         new Thread(() -> {
-            if (MainApplication.placeDao.combinationCount() != 92)
-                Queens.enumerate(8).forEach(place -> MainApplication.placeDao.insertAll(new QueenPlace(place)));
+            if (MainApplication.queenPlaceDao.combinationCount() != 92)
+                Queens.enumerate(8).forEach(place -> MainApplication.queenPlaceDao.insertAll(new QueenPlace(place)));
 
 
-            possiblePlaces = MainApplication.placeDao.getQueenPlaces();
+            possiblePlaces = MainApplication.queenPlaceDao.getQueenPlaces();
 
             runOnUiThread(() -> {
 

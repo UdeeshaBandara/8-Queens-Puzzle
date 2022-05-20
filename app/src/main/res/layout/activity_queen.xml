@@ -121,7 +121,7 @@
             android:layout_height="400dp"
             android:layout_alignParentStart="true"
 
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/background_black"
             android:orientation="vertical">
 
@@ -233,7 +233,7 @@
             android:layout_width="20dp"
             android:layout_height="400dp"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="45dp"
             android:background="@drawable/background_black"
 
             android:orientation="vertical">

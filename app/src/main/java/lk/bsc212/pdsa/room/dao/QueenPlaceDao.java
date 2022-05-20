@@ -11,7 +11,7 @@ import java.util.List;
 import lk.bsc212.pdsa.model.room.QueenPlace;
 
 @Dao
-public interface PlaceDao {
+public interface QueenPlaceDao {
 
 
     @Transaction
