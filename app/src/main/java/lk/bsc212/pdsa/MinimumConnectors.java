@@ -60,7 +60,6 @@ public class MinimumConnectors extends AppCompatActivity {
 
         initGraph();
 
-        new PrimsAlgorithm().primMST(weightedGraph.getEdges(), systemSelectedCity, answerFromCities, answerToCities, answerDistance);
 
         btnCheck.setOnClickListener(view -> {
 
@@ -92,11 +91,13 @@ public class MinimumConnectors extends AppCompatActivity {
 
             CityDistanceMinimumConnector[] showingEdges = new CityDistanceMinimumConnector[18];
 
-            long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
+            long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1),
+                    systemSelectedCity))[0];
 
             int outerIndex = 0;
             for (int count = 0; count < answerDistance.length; count++)
-                showingEdges[outerIndex++] = new CityDistanceMinimumConnector(selectedFromCities[count], selectedToCities[count], selectedDistance[count], answerId);
+                showingEdges[outerIndex++] = new CityDistanceMinimumConnector(selectedFromCities[count],
+                        selectedToCities[count], selectedDistance[count], answerId);
 
 
             for (int row = 0; row < (weightedGraph.getEdges().length); row++)
@@ -104,7 +105,8 @@ public class MinimumConnectors extends AppCompatActivity {
                 for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++) {
                     for (int enteredIndex = 0; enteredIndex < answerDistance.length; enteredIndex++)
 
-                        if ((showingEdges[enteredIndex].fromCityName == row && showingEdges[enteredIndex].toCityName == col) || (showingEdges[enteredIndex].toCityName == row && showingEdges[enteredIndex].fromCityName == col)) {
+                        if ((showingEdges[enteredIndex].fromCityName == row && showingEdges[enteredIndex].toCityName == col) ||
+                                (showingEdges[enteredIndex].toCityName == row && showingEdges[enteredIndex].fromCityName == col)) {
                             continue outerLoop;
 
                         }
@@ -119,7 +121,8 @@ public class MinimumConnectors extends AppCompatActivity {
             MainApplication.minimumConnectorDao.insertDistanceBetweenCities(showingEdges);
 
             for (int in = 0; in < selectedDistance.length; in++)
-                MainApplication.minimumConnectorDao.updateVisitedFlag(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]), String.valueOf(answerId));
+                MainApplication.minimumConnectorDao.updateVisitedFlag(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]),
+                        String.valueOf(answerId));
 
 
             return null;
@@ -152,10 +155,16 @@ public class MinimumConnectors extends AppCompatActivity {
         weightedGraph = new WeightedGraph(10);
 
         primsGraphDrawer.setData(weightedGraph, systemSelectedCity);
+
         description.setText("Lets Find the Minimum connectors starting from city " + systemSelectedCity);
 
-        minimumConnectorAdapter = new MinimumConnectorAdapter(MinimumConnectors.this, systemSelectedCity, selectedFromCities, selectedToCities, selectedDistance);
+        minimumConnectorAdapter = new MinimumConnectorAdapter(MinimumConnectors.this,
+                systemSelectedCity, selectedFromCities, selectedToCities, selectedDistance);
+
         recyclerMinimumConnector.setAdapter(minimumConnectorAdapter);
+
+        new PrimsAlgorithm().primMST(weightedGraph.getEdges(), systemSelectedCity, answerFromCities, answerToCities, answerDistance);
+
 
     }
 
@@ -165,7 +174,8 @@ public class MinimumConnectors extends AppCompatActivity {
 
         for (int index = 0; index < selectedDistance.length; index++) {
             for (int innerIndex = 0; innerIndex < selectedDistance.length; innerIndex++) {
-                if (answerToCities[innerIndex] == selectedToCities[index] && answerFromCities[innerIndex] == selectedFromCities[index] && answerDistance[innerIndex] == selectedDistance[index]) {
+                if (answerToCities[innerIndex] == selectedToCities[index] && answerFromCities[innerIndex] == selectedFromCities[index]
+                        && answerDistance[innerIndex] == selectedDistance[index]) {
                     isCorrectAnswer[index] = true;
 
                     break;

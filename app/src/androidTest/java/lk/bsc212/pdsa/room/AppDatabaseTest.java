@@ -13,16 +13,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
-import lk.bsc212.pdsa.model.room.ShortestDistanceAnswer;
-import lk.bsc212.pdsa.model.room.CityDistanceShortestPath;
-import lk.bsc212.pdsa.model.room.ShortestDistanceAnswerCity;
-import lk.bsc212.pdsa.model.room.CityDistanceMinimumConnector;
-import lk.bsc212.pdsa.model.room.MinimumConnectorAnswer;
+
+import lk.bsc212.pdsa.model.WeightedGraph;
 import lk.bsc212.pdsa.model.room.QueenPlace;
 import lk.bsc212.pdsa.room.dao.MinimumConnectorDao;
 import lk.bsc212.pdsa.room.dao.QueenPlaceDao;
 import lk.bsc212.pdsa.room.dao.ShortestPathDao;
+import lk.bsc212.pdsa.utils.PrimsAlgorithm;
 import lk.bsc212.pdsa.utils.Queens;
 
 @RunWith(AndroidJUnit4.class)
@@ -71,68 +71,30 @@ public class AppDatabaseTest extends TestCase {
     }
 
     @Test
-    public void shortestDistanceCorrect() {
+    public void checkStartNodeNotVisitedAgain() {
 
-        ShortestDistanceAnswer shortDistance = new ShortestDistanceAnswer(12,9);
-        shortestPathDao.insertAll(shortDistance);
+        int[] answerFromCities = new int[9];
+        int[] answerToCities = new int[9];
+        int[] answerDistance = new int[9];
+        int systemSelectedCity = (int) (Math.random() * (9 + 1) + 0);
 
-        CityDistanceShortestPath cityDistanceShortestPath = new CityDistanceShortestPath(9,0,7,12);
-        shortestPathDao.insertDistanceBetweenCities(cityDistanceShortestPath);
-
-        ShortestDistanceAnswerCity shortestDistanceAnswerCity = new ShortestDistanceAnswerCity(0,7,12);
-        shortestPathDao.insertShortestPaths(shortestDistanceAnswerCity);
-
-        assertThat(cityDistanceShortestPath.distance == shortestDistanceAnswerCity.shortestDistance).isTrue();
-
-    }
-
-    @Test
-    public void shortestDistanceInCorrect() {
-
-        ShortestDistanceAnswer shortdistance = new ShortestDistanceAnswer(12,9);
-        shortestPathDao.insertAll(shortdistance);
-
-        CityDistanceShortestPath cityDistanceShortestPath = new CityDistanceShortestPath(9,0,7,12);
-        shortestPathDao.insertDistanceBetweenCities(cityDistanceShortestPath);
-
-        ShortestDistanceAnswerCity shortestDistanceAnswerCity = new ShortestDistanceAnswerCity(0,51,12);
-        shortestPathDao.insertShortestPaths(shortestDistanceAnswerCity);
-
-        assertThat(cityDistanceShortestPath.distance == shortestDistanceAnswerCity.shortestDistance).isFalse();
+        WeightedGraph weightedGraph = new WeightedGraph(10);
+        new PrimsAlgorithm().primMST(weightedGraph.getEdges(),
+                systemSelectedCity, answerFromCities, answerToCities, answerDistance);
+        assertThat(Arrays.stream(answerToCities).anyMatch(i -> i == systemSelectedCity)).isFalse();
 
     }
 
     @Test
-    public void minimumConnects(){
-        MinimumConnectorAnswer minimumConnectorAnswer = new MinimumConnectorAnswer(0,2);
-        long[] insertAll = minimumConnectorDao.insertAll(minimumConnectorAnswer);
+    public void checkWhetherGraphUnDirectedOrNot() {
 
-        CityDistanceMinimumConnector cityDistanceMinimumConnector = new CityDistanceMinimumConnector(2,8,18,12);
-        minimumConnectorDao.insertDistanceBetweenCities(cityDistanceMinimumConnector);
+        WeightedGraph weightedGraph = new WeightedGraph(10);
+        int row = (int) (Math.random() * (9 + 1) + 0);
+        int col = (int) (Math.random() * (9 + 1) + 0);
 
-        minimumConnectorDao.updateVisitedFlag("2","8","12");
+        assertThat(weightedGraph.getEdges()[row][col]).isEqualTo(weightedGraph.getEdges()[col][row]);
 
-//        assertThat(cityDistanceMinimumConnector.fromCityName,cityDistanceMinimumConnector.distance == minimumConnectorDao.updateVisitedFlag("2","8","12").;)
-//        assertThat(cityDistanceMinimumConnector.equals(minimumConnectorAnswerCity)).isEqualTo(true);
+
     }
-
-    @Test
-    public void minimumConnectsInCorrect(){
-        MinimumConnectorAnswer minimumConnectorAnswer = new MinimumConnectorAnswer(0,2);
-        long[] insertAll = minimumConnectorDao.insertAll(minimumConnectorAnswer);
-
-        CityDistanceMinimumConnector cityDistanceMinimumConnector = new CityDistanceMinimumConnector(2,8,18,12);
-        minimumConnectorDao.insertDistanceBetweenCities(cityDistanceMinimumConnector);
-
-        minimumConnectorDao.updateVisitedFlag("2","7","12");
-//        MinimumConnectorAnswerCity minimumConnectorAnswerCity = new MinimumConnectorAnswerCity(2,8,21,12);
-////        minimumConnectorDao.insertShortestPaths(minimumConnectorAnswerCity);
-//        long[] insertShortestPaths = minimumConnectorDao.insertAll(minimumConnectorAnswer);
-//
-//        assertThat(cityDistanceMinimumConnector.equals(minimumConnectorAnswerCity)).isEqualTo(false);
-    }
-
-
-
 
 }
