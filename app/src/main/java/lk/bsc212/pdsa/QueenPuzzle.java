@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -35,7 +34,7 @@ public class QueenPuzzle extends AppCompatActivity {
     //UI elements
     RecyclerView recyclerChessBoard;
     private KProgressHUD hud;
-    Button btnFinish;
+    Button btnFinish, btnClear;
 
     ChessAdapter chessAdapter;
     TinyDB tinyDB;
@@ -56,7 +55,7 @@ public class QueenPuzzle extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (Collections.frequency(selectedPlaces, "1") != 8)
-                    new AlertDialog().negativeAlert(QueenPuzzle.this, "Sorry!!!", " Cannot select more than 8 places", "Got it");
+                    new AlertDialog().negativeAlert(QueenPuzzle.this, "Oops!!!", "Select 8 tiles as per your choice to check your luck of winning", "Got it");
 
                 else {
                     String selectedPlacesString = selectedPlaces.stream().map(Object::toString)
@@ -71,11 +70,17 @@ public class QueenPuzzle extends AppCompatActivity {
                                 List<QueenPlaceUser> queenPlaceUser = MainApplication.userDao.getAnsweredUser(placesArray.placeId);
 
                                 if (queenPlaceUser.size() > 0) {
-                                    runOnUiThread(() -> new AlertDialog().negativeAlert(QueenPuzzle.this, " Sorry!!!", "Your choice have already submitted by " + queenPlaceUser.get(0).user.name, "OK"));
+                                    runOnUiThread(() -> {
+                                        new AlertDialog().negativeAlert(QueenPuzzle.this, " Sorry!!!", "Your choice have already submitted by " + queenPlaceUser.get(0).user.name, "OK");
+                                        btnClear.performClick();
+                                    });
 
                                 } else {
                                     MainApplication.placeDao.insertAll(new QueenPlace(placesArray.placeId, placesArray.places, tinyDB.getLong("userId", 1)));
-                                    runOnUiThread(() -> new AlertDialog().positiveAlert(QueenPuzzle.this, "Hurray!!!", "Your choice is a Correct answer….", "OK"));
+                                    runOnUiThread(() -> {
+                                        new AlertDialog().positiveAlert(QueenPuzzle.this, "Hurray!!!", "Your choice is a Correct answer….", "OK");
+                                        btnClear.performClick();
+                                    });
 
 
                                     if (MainApplication.placeDao.checkOtherOptionExist() == 0) {
@@ -94,7 +99,7 @@ public class QueenPuzzle extends AppCompatActivity {
                 }
             }
         });
-        findViewById(R.id.btn_clear).setOnClickListener(view -> {
+        btnClear.setOnClickListener(view -> {
 
             selectedPlaces = new ArrayList<>(Collections.nCopies(64, "0"));
             chessAdapter.updatePlaces(selectedPlaces);
@@ -105,15 +110,10 @@ public class QueenPuzzle extends AppCompatActivity {
             AsyncTask.execute(() -> MainApplication.placeDao.resetGame());
             selectedPlaces = new ArrayList<>(Collections.nCopies(64, "0"));
             chessAdapter.updatePlaces(selectedPlaces);
+            new AlertDialog().positiveAlert(QueenPuzzle.this, "Information!!!", "All game records have been reset", "OK");
 
         });
-        findViewById(R.id.btn_switch).setOnClickListener(view -> {
 
-            tinyDB.putBoolean("isNameSelected", false);
-            startActivity(new Intent(QueenPuzzle.this, NameActivity.class));
-            finishAffinity();
-
-        });
 
     }
 
@@ -122,6 +122,7 @@ public class QueenPuzzle extends AppCompatActivity {
         tinyDB = new TinyDB(QueenPuzzle.this);
 
         recyclerChessBoard = findViewById(R.id.recycler_chess_board);
+        btnClear = findViewById(R.id.btn_clear);
         btnFinish = findViewById(R.id.btn_finish);
         hud = KProgressHUD.create(this)
                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)

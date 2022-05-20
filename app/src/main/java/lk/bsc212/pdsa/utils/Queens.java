@@ -11,10 +11,7 @@ public class Queens {
     static List<String> possiblePs = new ArrayList<>();
 
 
-    /***************************************************************************
-     * Return true if queen placement q[n] does not conflict with
-     * other queens q[0] through q[n-1]
-     ***************************************************************************/
+
     public static boolean isConsistent(int[] q, int n) {
         for (int i = 0; i < n; i++) {
             if (q[i] == q[n]) return false;   // same column
@@ -24,9 +21,6 @@ public class Queens {
         return true;
     }
 
-    /***************************************************************************
-     * Prints n-by-n placement of queens from permutation q in ASCII.
-     ***************************************************************************/
 
     public static void printQueens(int[] q) {
         int n = q.length;
@@ -52,9 +46,6 @@ public class Queens {
     }
 
 
-    /***************************************************************************
-     *  Try all permutations using backtracking
-     ***************************************************************************/
     public static List<String> enumerate(int n) {
         int[] a = new int[n];
         return enumerate(a, 0);

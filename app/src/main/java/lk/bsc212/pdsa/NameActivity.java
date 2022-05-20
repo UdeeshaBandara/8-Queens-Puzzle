@@ -29,20 +29,17 @@ public class NameActivity extends AppCompatActivity {
 
         userName = findViewById(R.id.user_name);
 
-        findViewById(R.id.btn_add_player).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        findViewById(R.id.btn_add_player).setOnClickListener(view -> {
 
-                if (TextUtils.isEmpty(userName.getText().toString()))
-                    new AlertDialog().negativeAlert(NameActivity.this, "Invalid Input", "Please enter your name", "OK");
-                else {
-                    tinyDB.putBoolean("isNameSelected", true);
-                    AsyncTask.execute(() -> tinyDB.putLong("userId", MainApplication.userDao.insertAll(new User(userName.getText().toString()))[0]));
-                    startActivity(new Intent(NameActivity.this, MenuActivity.class));
-                    finishAffinity();
-                }
-
+            if (TextUtils.isEmpty(userName.getText().toString()))
+                new AlertDialog().negativeAlert(NameActivity.this, "Invalid Input", "Please enter your name", "OK");
+            else {
+                tinyDB.putBoolean("isNameSelected", true);
+                AsyncTask.execute(() -> tinyDB.putLong("userId", MainApplication.userDao.insertAll(new User(userName.getText().toString()))[0]));
+                startActivity(new Intent(NameActivity.this, MenuActivity.class));
+                finishAffinity();
             }
+
         });
     }
 }
