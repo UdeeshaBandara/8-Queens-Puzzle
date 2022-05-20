@@ -71,7 +71,7 @@ public class AppDatabaseTest extends TestCase {
     }
 
     @Test
-    public void shortestDistanceCheck() {
+    public void shortestDistanceCorrect() {
 
         ShortestDistanceAnswer shortDistance = new ShortestDistanceAnswer(12,9);
         shortestPathDao.insertAll(shortDistance);
@@ -82,7 +82,7 @@ public class AppDatabaseTest extends TestCase {
         ShortestDistanceAnswerCity shortestDistanceAnswerCity = new ShortestDistanceAnswerCity(0,7,12);
         shortestPathDao.insertShortestPaths(shortestDistanceAnswerCity);
 
-        assertThat(cityDistanceShortestPath.equals(shortestDistanceAnswerCity));
+        assertThat(cityDistanceShortestPath.distance == shortestDistanceAnswerCity.shortestDistance).isTrue();
 
     }
 
@@ -98,7 +98,7 @@ public class AppDatabaseTest extends TestCase {
         ShortestDistanceAnswerCity shortestDistanceAnswerCity = new ShortestDistanceAnswerCity(0,51,12);
         shortestPathDao.insertShortestPaths(shortestDistanceAnswerCity);
 
-        assertThat(cityDistanceShortestPath.equals(shortestDistanceAnswerCity)).isFalse();
+        assertThat(cityDistanceShortestPath.distance == shortestDistanceAnswerCity.shortestDistance).isFalse();
 
     }
 
@@ -110,10 +110,9 @@ public class AppDatabaseTest extends TestCase {
         CityDistanceMinimumConnector cityDistanceMinimumConnector = new CityDistanceMinimumConnector(2,8,18,12);
         minimumConnectorDao.insertDistanceBetweenCities(cityDistanceMinimumConnector);
 
-//        MinimumConnectorAnswerCity minimumConnectorAnswerCity = new MinimumConnectorAnswerCity(2,8,18,12);
-////        minimumConnectorDao.insertShortestPaths(minimumConnectorAnswerCity);
-//        long[] insertShortestPaths = minimumConnectorDao.insertAll(minimumConnectorAnswer);
-//
+        minimumConnectorDao.updateVisitedFlag("2","8","12");
+
+//        assertThat(cityDistanceMinimumConnector.fromCityName,cityDistanceMinimumConnector.distance == minimumConnectorDao.updateVisitedFlag("2","8","12").;)
 //        assertThat(cityDistanceMinimumConnector.equals(minimumConnectorAnswerCity)).isEqualTo(true);
     }
 
@@ -125,6 +124,7 @@ public class AppDatabaseTest extends TestCase {
         CityDistanceMinimumConnector cityDistanceMinimumConnector = new CityDistanceMinimumConnector(2,8,18,12);
         minimumConnectorDao.insertDistanceBetweenCities(cityDistanceMinimumConnector);
 
+        minimumConnectorDao.updateVisitedFlag("2","7","12");
 //        MinimumConnectorAnswerCity minimumConnectorAnswerCity = new MinimumConnectorAnswerCity(2,8,21,12);
 ////        minimumConnectorDao.insertShortestPaths(minimumConnectorAnswerCity);
 //        long[] insertShortestPaths = minimumConnectorDao.insertAll(minimumConnectorAnswer);
