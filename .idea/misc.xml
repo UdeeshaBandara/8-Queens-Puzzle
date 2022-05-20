@@ -10,15 +10,17 @@
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/splash_layout.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/drawable/white_background.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_main.xml" value="0.20615384615384616" />
-        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_menu.xml" value="0.1" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_menu.xml" value="0.33" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_minimum_connectors.xml" value="0.209375" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_name.xml" value="0.209375" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_queen.xml" value="0.2517985611510791" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/activity_shortest_path.xml" value="0.26042632066728455" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_chess_cell.xml" value="0.20615384615384616" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_city.xml" value="0.209375" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_minimum_connector.xml" value="0.209375" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_shortest_path_city.xml" value="0.209375" />
         <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/layout/item_spinner.xml" value="0.209375" />
+        <entry key="..\:/Users/DELL/AndroidStudioProjects/PDSA_CW/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.17222222222222222" />
       </map>
     </option>
   </component>

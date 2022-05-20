@@ -24,7 +24,7 @@ import lk.bsc212.pdsa.room.dao.UserDao;
         CityDistanceMinimumConnector.class}, version = 6)
 
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract QueenPlaceDao placeDao();
+    public abstract QueenPlaceDao queenPlaceDao();
 
     public abstract UserDao userDao();
 

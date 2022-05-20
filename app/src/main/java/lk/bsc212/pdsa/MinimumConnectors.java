@@ -95,19 +95,31 @@ public class MinimumConnectors extends AppCompatActivity {
             long answerId = MainApplication.minimumConnectorDao.insertAll(new MinimumConnectorAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
 
             int outerIndex = 0;
+            for (int count = 0; count < answerDistance.length; count++)
+                showingEdges[outerIndex++] = new CityDistanceMinimumConnector(selectedFromCities[count], selectedToCities[count], selectedDistance[count], answerId);
+
+
             for (int row = 0; row < (weightedGraph.getEdges().length); row++)
-                for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++)
+                outerLoop:
+                for (int col = 0; col < (weightedGraph.getEdges()[0].length); col++) {
+                    for (int enteredIndex = 0; enteredIndex < answerDistance.length; enteredIndex++)
+
+                        if ((showingEdges[enteredIndex].fromCityName == row && showingEdges[enteredIndex].toCityName == col) || (showingEdges[enteredIndex].toCityName == row && showingEdges[enteredIndex].fromCityName == col)) {
+                            continue outerLoop;
+
+                        }
                     if (weightedGraph.getEdges()[row][col] != 0 && weightedGraph.getEdges()[col][row] != 0) {
+
                         showingEdges[outerIndex++] = new CityDistanceMinimumConnector(row, col, weightedGraph.getEdges()[row][col], answerId);
                         //assign 0 to transposed location
                         weightedGraph.getEdges()[col][row] = 0;
                     }
+                }
 
             MainApplication.minimumConnectorDao.insertDistanceBetweenCities(showingEdges);
 
             for (int in = 0; in < selectedDistance.length; in++)
                 MainApplication.minimumConnectorDao.updateVisitedFlag(String.valueOf(selectedFromCities[in]), String.valueOf(selectedToCities[in]), String.valueOf(answerId));
-
 
 
             return null;
@@ -131,6 +143,7 @@ public class MinimumConnectors extends AppCompatActivity {
         Arrays.fill(selectedFromCities, -1);
         Arrays.fill(selectedToCities, -1);
         Arrays.fill(selectedDistance, -1);
+
         systemSelectedCity = (int) (Math.random() * (9 + 1) + 0);
         recyclerMinimumConnector = findViewById(R.id.recycler_minimum_connector);
         recyclerMinimumConnector.setLayoutManager(new LinearLayoutManager(MinimumConnectors.this, LinearLayoutManager.VERTICAL, false));

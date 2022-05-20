@@ -5,14 +5,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,14 +87,19 @@ public class ShortestPath extends AppCompatActivity {
 
 
             if (predictedDistance.stream().anyMatch(o -> o.getPredictedDistance() == 0.0))
-            new AlertDialog().negativeAlert(ShortestPath.this, "Invalid Input", "Please enter distance for all cities", "OK");
+                new AlertDialog().negativeAlert(ShortestPath.this, "Invalid Input",
+                        "Please enter distance for all cities", "OK");
 
             else if (isCorrectAnswer()) {
-                new AlertDialog().positiveAlert(ShortestPath.this, "Hurray and Congratulations!!!", "You have Successfully completed the Game", "Great");
+
+                new AlertDialog().positiveAlert(ShortestPath.this, "Hurray and Congratulations!!!",
+                        "You have Successfully completed the Game", "Great");
 
                 new PerformDatabaseOperations().execute();
+
             } else
-                new AlertDialog().negativeAlert(ShortestPath.this, "Incorrect Answer", "Wrong answer. Try again!!", "OK");
+                new AlertDialog().negativeAlert(ShortestPath.this, "Incorrect Answer",
+                        "Wrong answer. Try again!!", "OK");
         });
 
     }
@@ -107,7 +110,8 @@ public class ShortestPath extends AppCompatActivity {
             CityDistanceShortestPath[] showingEdges = new CityDistanceShortestPath[18];
             ShortestDistanceAnswerCity[] predictedDis = new ShortestDistanceAnswerCity[9];
 
-            long answerId = MainApplication.shortestPathDao.insertAll(new ShortestDistanceAnswer(tinyDB.getLong("userId", 1), systemSelectedCity))[0];
+            long answerId = MainApplication.shortestPathDao.insertAll(new ShortestDistanceAnswer(tinyDB.getLong("userId", 1),
+                    systemSelectedCity))[0];
 
             int outerIndex = 0;
             for (int row = 0; row < (weightedGraph.getEdges().length); row++)
@@ -120,7 +124,8 @@ public class ShortestPath extends AppCompatActivity {
             MainApplication.shortestPathDao.insertDistanceBetweenCities(showingEdges);
 
             for (int in = 0; in < predictedDistance.size(); in++)
-                predictedDis[in] = new ShortestDistanceAnswerCity(predictedDistance.get(in).getCityName(), predictedDistance.get(in).getPredictedDistance(), answerId);
+                predictedDis[in] = new ShortestDistanceAnswerCity(predictedDistance.get(in).getCityName(), predictedDistance.get(in).getPredictedDistance(),
+                        answerId);
 
 
             MainApplication.shortestPathDao.insertShortestPaths(predictedDis);

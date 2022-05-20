@@ -77,8 +77,8 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (!isSpinnerTouched || position == 0) return;
-                int selectedFromCity = Integer.parseInt(parent.getItemAtPosition(position).toString());
 
+                int selectedFromCity = Integer.parseInt(parent.getItemAtPosition(position).toString());
 
                 if (selectedToCities[recyclerPosition] == selectedFromCity) {
                     parent.setSelection(0);
@@ -102,18 +102,19 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
                 if (!isSpinnerTouched || position == 0) return;
 
                 int selectedCity = Integer.parseInt(parent.getItemAtPosition(position).toString());
+
                 if (systemSelectedCity == selectedCity) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", " Sorry, The starting city cannot be selected again as choice", "OK");
+                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", "Sorry, The starting city cannot be selected again as choice", "OK");
                 } else if (Arrays.stream(selectedToCities).anyMatch(i -> i == selectedCity)) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", " This city is already selected as a reaching city!!!", "OK");
+                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", "This city is already selected as a reaching city!!!", "OK");
                 } else if (selectedFromCities[recyclerPosition] == selectedCity) {
                     parent.setSelection(0);
                     selectedToCities[recyclerPosition] = -1;
-                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", " Sorry, The starting city cannot be selected again as choice", "OK");
+                    new AlertDialog().negativeAlert(context, "Invalid Move!!!", "Sorry, The starting city cannot be selected again as choice", "OK");
                 } else
                     selectedToCities[recyclerPosition] = selectedCity;
             }

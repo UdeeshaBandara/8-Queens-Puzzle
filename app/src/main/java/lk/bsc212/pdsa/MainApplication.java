@@ -20,6 +20,7 @@ public class MainApplication extends Application {
 
     //Database
     public static AppDatabase appDatabase;
+    //DAOs
     public static QueenPlaceDao queenPlaceDao;
     public static UserDao userDao;
     public static ShortestPathDao shortestPathDao;
@@ -31,7 +32,7 @@ public class MainApplication extends Application {
         context = this;
 
         appDatabase = AppDatabase.getDatabase(MainApplication.this);
-        queenPlaceDao = appDatabase.placeDao();
+        queenPlaceDao = appDatabase.queenPlaceDao();
         userDao = appDatabase.userDao();
         shortestPathDao = appDatabase.shortestPathDao();
         minimumConnectorDao = appDatabase.minimumConnectorDao();

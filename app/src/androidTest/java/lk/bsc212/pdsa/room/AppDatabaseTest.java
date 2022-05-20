@@ -39,7 +39,9 @@ public class AppDatabaseTest extends TestCase {
         super.setUp();
         appDatabase = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(), AppDatabase.class).allowMainThreadQueries().build();
 
-        queenPlaceDao = appDatabase.placeDao();
+        queenPlaceDao = appDatabase.queenPlaceDao();
+        shortestPathDao = appDatabase.shortestPathDao();
+        minimumConnectorDao = appDatabase.minimumConnectorDao();
     }
 
     @After
@@ -71,8 +73,8 @@ public class AppDatabaseTest extends TestCase {
     @Test
     public void shortestDistanceCheck() {
 
-        ShortestDistanceAnswer shortdistance = new ShortestDistanceAnswer(12,9);
-        shortestPathDao.insertAll(shortdistance);
+        ShortestDistanceAnswer shortDistance = new ShortestDistanceAnswer(12,9);
+        shortestPathDao.insertAll(shortDistance);
 
         CityDistanceShortestPath cityDistanceShortestPath = new CityDistanceShortestPath(9,0,7,12);
         shortestPathDao.insertDistanceBetweenCities(cityDistanceShortestPath);
@@ -80,7 +82,7 @@ public class AppDatabaseTest extends TestCase {
         ShortestDistanceAnswerCity shortestDistanceAnswerCity = new ShortestDistanceAnswerCity(0,7,12);
         shortestPathDao.insertShortestPaths(shortestDistanceAnswerCity);
 
-        assertThat(cityDistanceShortestPath.equals(shortestDistanceAnswerCity)).isEqualTo(true);
+        assertThat(cityDistanceShortestPath.equals(shortestDistanceAnswerCity));
 
     }
 
