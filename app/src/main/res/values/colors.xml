@@ -7,4 +7,5 @@
     <color name="green">#4FCB81</color>
     <color name="yellow">#F9BC18</color>
     <color name="ic_launcher_background">#16153d</color>
+    <color name="splash_background">#f7f7f7</color>
 </resources>
