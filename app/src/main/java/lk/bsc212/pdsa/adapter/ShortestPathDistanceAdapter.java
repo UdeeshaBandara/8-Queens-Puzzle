@@ -43,7 +43,7 @@ public class ShortestPathDistanceAdapter extends RecyclerView.Adapter<ShortestPa
 
     }
 
-    @Override
+    @Override//inside for loop
     public void onBindViewHolder(@NonNull DistanceHolder holder, @SuppressLint("RecyclerView") int position) {
 
         holder.answerEditTextListener.updatePosition(holder.getAdapterPosition());
@@ -55,7 +55,7 @@ public class ShortestPathDistanceAdapter extends RecyclerView.Adapter<ShortestPa
         });
     }
 
-    @Override
+    @Override//for loop condition/count-array size=loop count
     public int getItemCount() {
         return predictedDistance.size();
     }
@@ -78,7 +78,7 @@ public class ShortestPathDistanceAdapter extends RecyclerView.Adapter<ShortestPa
         }
     }
 
-    //Customize text change listener to enhance performance instead of adding inside the onBind
+
     private class AnswerEditTextListener implements TextWatcher {
         private int position;
 

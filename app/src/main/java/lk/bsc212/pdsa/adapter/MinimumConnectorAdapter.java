@@ -164,7 +164,7 @@ public class MinimumConnectorAdapter extends RecyclerView.Adapter<MinimumConnect
         }
     }
 
-    //Customize text change listener to enhance performance instead of adding inside the onBind
+
     private class AnswerEditTextListener implements TextWatcher {
         private int position;
 

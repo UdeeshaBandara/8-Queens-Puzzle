@@ -78,6 +78,7 @@ public class ShortestPath extends AppCompatActivity {
         dijkstraAlgorithm = new DijkstraAlgorithm();
 
 
+
         recyclerDistance.setLayoutManager(new LinearLayoutManager(ShortestPath.this, LinearLayoutManager.VERTICAL, false));
 
         refresh.setOnClickListener(view -> initGraph());
@@ -170,7 +171,7 @@ public class ShortestPath extends AppCompatActivity {
     boolean isCorrectAnswer() {
 
         predictedDistance.add(systemSelectedCity, new PlacePredict(systemSelectedCity, 0));
-        boolean isCorrectAnswer = true;
+        boolean isCorrectAnswer = true;//flag
 
         for (int index = 0; index < shortestPathAnswers.size(); index++) {
 
@@ -179,13 +180,13 @@ public class ShortestPath extends AppCompatActivity {
 
             if (shortestPathAnswers.get(index) != predictedDistance.get(index).getPredictedDistance()) {
                 isCorrectAnswer = false;
-                break;
+                break;//loop breaks
             }
 
         }
         predictedDistance.remove(systemSelectedCity);
 
-        return isCorrectAnswer;
+        return isCorrectAnswer;//return flag
 
     }
 

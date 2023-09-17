@@ -48,6 +48,7 @@ public class WeightedGraphVisualizer extends View {
         circlePaint = new Paint();
         textPaint = new Paint();
 
+        //numbers-nodes
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(getDimensionInPixelFromSP(15));
         textPaint.setAntiAlias(true);
@@ -56,11 +57,13 @@ public class WeightedGraphVisualizer extends View {
         bounds = new Rect();
         textPaint.getTextBounds("0", 0, 1, bounds);
 
+        //lines/edges
         weightPaint = new Paint(textPaint);
         weightPaint.setColor(Color.BLACK);
         weightPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
         weightPaint.setTextSize(getDimensionInPixelFromSP(18));
 
+        //circle around nodes
         circlePaint.setColor(getResources().getColor(R.color.primary));
         circlePaint.setAntiAlias(true);
 
@@ -77,37 +80,40 @@ public class WeightedGraphVisualizer extends View {
         lineHighlightPaint.setStrokeWidth(10);
     }
 
-    private @NonNull
+    private @NonNull //bkground around edge weight values to view clearly*
     Rect getTextBackgroundSize(float x, float y, @NonNull String text, @NonNull Paint paint) {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         float halfTextLength = paint.measureText(text) / 2 + 5;
         return new Rect((int) (x - halfTextLength), (int) (y + fontMetrics.top), (int) (x + halfTextLength), (int) (y + fontMetrics.bottom));
     }
 
-    @Override
+    @Override//graph rectangle size
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(getMeasuredWidth(), getDimensionInPixel(400));
     }
 
+    //graph data to be drawn
     public void setData(WeightedGraph graph, int systemSelectedCity) {
         this.graph = graph;
         this.systemSelectedCity = systemSelectedCity;
         invalidate();
     }
 
-    @Override
+    @Override//drawing graph
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (graph != null)
             drawGraph(canvas);
     }
 
+    //locations to draw nodes
     private void drawGraph(Canvas canvas) {
 
         int[][] vertices = {
                 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9},
 
+                //x-axis location
                 {getWidth() - getDimensionInPixel(50),
                         getWidth() - getDimensionInPixel(50),
                         getWidth() / 2 + getDimensionInPixel(80),
@@ -122,6 +128,7 @@ public class WeightedGraphVisualizer extends View {
 
                 },
 
+                //y-axis location
                 {getHeight() / 2 + getDimensionInPixel(80),
                         getHeight() / 2 - getDimensionInPixel(45),
                         getDimensionInPixel(40),
@@ -136,6 +143,7 @@ public class WeightedGraphVisualizer extends View {
                 }
         };
 
+        //mode locations added to 2d array(x and y) and passed to addNode()
         for (int i = 0; i < graph.size(); i++) {
             int node = vertices[0][i];
             Point p = new Point(vertices[1][i], vertices[2][i]);
@@ -145,10 +153,12 @@ public class WeightedGraphVisualizer extends View {
         drawNodes(canvas);
     }
 
+    //nodes added to a map
     private void addNode(Point point, int i) {
         pointMap.put(i, point);
     }
 
+    //drawing nodes in correct position
     private void drawNodes(Canvas canvas) {
         for (Map.Entry<Integer, Point> entry : pointMap.entrySet()) {
             Integer key = entry.getKey();
@@ -165,16 +175,21 @@ public class WeightedGraphVisualizer extends View {
         }
     }
 
+    //drawing circle around nodes
     private void drawCircleTextNode(Canvas canvas, Point p, int number) {
         String text = String.valueOf(number);
 
+        //if circle is system selected city, circle will be red
         if (systemSelectedCity == number)
             circlePaint.setColor(Color.RED);
 
+        //if not, default node color
         else
             circlePaint.setColor(getResources().getColor(R.color.primary));
 
+        //draw library called and used-drawing the circle in colors selected previously
         canvas.drawCircle(p.x, p.y, getDimensionInPixel(15), circlePaint);
+
 
         int yOffset = bounds.height() / 2;
 
@@ -182,24 +197,28 @@ public class WeightedGraphVisualizer extends View {
 
     }
 
-
+    //draw edge/node line
     private void drawNodeLine(Canvas canvas, int s, int e, int weight) {
 
+        //take start and end nodes to draw edge
         Point start = pointMap.get(s);
         Point end = pointMap.get(e);
 
+        // by taking mid position of two nodes and drawn edge
         int midx = (start.x + end.x) / 2;
         int midy = (start.y + end.y) / 2;
 
-
+        //draw edge
         canvas.drawLine(start.x, start.y, end.x, end.y, linePaint);
 
+        //add number/edge weight by adding background*
         Rect background = getTextBackgroundSize(midx, midy, String.valueOf(weight), weightPaint);
         canvas.drawRect(background, textPaint);
         canvas.drawText(String.valueOf(weight), midx, midy, weightPaint);
 
     }
 
+    //to get same dp even if different devices are used
     public int getDimensionInPixel(int dp) {
         int density = getResources().getDisplayMetrics().densityDpi;
 

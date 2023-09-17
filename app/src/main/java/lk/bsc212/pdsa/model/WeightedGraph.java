@@ -36,7 +36,7 @@ public class WeightedGraph {
         addEdge(7, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
         addEdge(8, 9, (int) (Math.random() * (50 - 5 + 1) + 5));
 
-        //Backtrace the edge values to make it a bi-directional graph
+
         for (int row = 0; row < edges.length; row++)
             for (int column = 0; column < edges[0].length; column++)
                 edges[column][row] = edges[row][column];
